@@ -1,0 +1,13 @@
+.page-hearder{
+  display:flex;
+  justify-content: space-between;
+}
+
+.main-nav{
+  display: flex;
+  list-style: none;
+}
+
+.main-nav li{
+  margin-left: 36px;
+}

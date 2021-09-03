@@ -1,0 +1,27 @@
+{% extends 'accounts/layout.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %}Signuo{% endblock %}
+
+{% block content %}
+<h1>サインアップ</h1>
+<form method="POST">
+  {% csrf_token %}
+  <div>
+    {{ form.username }}
+  </div>
+  <div>
+    {{ form.birthday }}
+  </div>
+  <div>
+    {{ form.password1 }}
+  </div>
+  <div>
+    {{ form.password2 }}
+  </div>
+  <div>
+    <button type="submit">サインアップ</button>
+  </div>
+</form>
+{% endblock %}

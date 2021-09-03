@@ -1,0 +1,31 @@
+{% load static %}
+<!doctype>
+<html lang="ja">
+  <head>
+    <meta charset="="utf-8>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css"
+    href="{% static 'bookdoor/css/layout.css' %}">
+  </head>
+  <body>
+    <header class="page-hearder">
+      <h1><a href="{% url 'bookdoor:index' %}"><img class="logo" src="../../static/bookdoor/image/logo.jpg" alt="BookDoor"></a></h1>
+      <ul class="main-nav">
+        <li>
+          <div><a>サーチ</a></div>
+        </li>
+        <li>
+          <ruby>
+            お気に入り
+            <rt>おきにいり</rt>
+          </ruby>
+        </li>
+        <li>
+          <div>
+            <a href="{% url 'accounts:profile' %}">アカウント</a>
+          </div>
+        </li>
+    </header>
+    {% block content %}{% endblock %}
+  </body>
+</html>

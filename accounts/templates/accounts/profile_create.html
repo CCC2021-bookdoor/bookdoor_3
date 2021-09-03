@@ -1,0 +1,15 @@
+{% extends 'accounts/layout.html' %}
+
+{% block title %}ProfileCreate{% endblock %}
+
+{% block content %}
+<div>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div>
+      <button type="submit">登録</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

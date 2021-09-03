@@ -37,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks', 
+    'bookdoor', 
+    'accounts', 
+    'django.contrib.sites', 
+    'allauth', 
+    'allauth.account', 
+    'allauth.socialaccount' 
 ]
 
 MIDDLEWARE = [
@@ -103,9 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
@@ -118,6 +125,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/pics/'
+MEDIA_ROOT = BASE_DIR
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/acoounts/profile'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL='accounts.CustomUser'
+ACCOUNT_USER_MODEL_EMAIL_FIELD=None
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
