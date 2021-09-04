@@ -1,0 +1,51 @@
+{% extends 'bookdoor/layout.html' %}
+
+{% block title %}{{ search }}-BookDoor{% endblock %}
+
+{% block content %}
+<form action="{% url 'bookdoor:book_search' category_id %}" method="post">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="search">
+</form>
+<br><br><br>
+<div>
+  {% if search == '' %}
+  <div><a href="{% url 'bookdoor:book_search' 0 %}">すべて</a></div>
+  {% for item in category %}
+  <div><a href="{% url 'bookdoor:book_search' item.id %}">{{ item.category }}</a></div>
+  {% endfor %}
+  {% else %}
+  <div><a href="{% url 'bookdoor:book_search_category' 0 search %}">すべて</a></div>
+  {% for item in category %}
+  <div><a href="{% url 'bookdoor:book_search_category' item.id search %}">{{ item.category }}</a></div>
+  {% endfor %}
+  {% endif %}
+  
+</div>
+{% if count == 0 %}
+<div>存在しません</div>
+{% else %}
+{% for item in data %}
+<tr>
+  <th><a>{{ item.title }}</a></th>
+  <td>
+    {% if item.author != None %}
+    {{ item.author}}(著)
+    {% endif %}
+  </td>
+  <td>
+    {% if item.illustrator != None %}
+    {{ item.illustrator}}(イラスト)
+    {% endif %}
+  </td>
+  <td>
+    {% if item.translator != None %}
+    {{ item.translator }}(翻訳)
+    {% endif %}
+  </td>
+</tr>
+<br>
+{% endfor %}
+{% endif %}
+{% endblock %}
