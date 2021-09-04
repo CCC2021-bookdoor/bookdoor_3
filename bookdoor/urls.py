@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from .views import BookDoorView, BookSearchView, BookCreateView
+from .views import BookDetailView, BookCommentView
 from .views import BookSearchCategoriView
 
 app_name='bookdoor'
@@ -9,5 +10,7 @@ urlpatterns=[
   path(r'book_search/<int:category_id>',BookSearchView.as_view(), name='book_search'),
   path(r'book_search/<int:category_id>/<str:search>',\
     BookSearchCategoriView.as_view(), name='book_search_category'),
+  path(r'book_detail/<str:book_code>',BookDetailView.as_view(), name='book_detail'),
+  path(r'book_comment/<str:book_code>',BookCommentView.as_view(), name='book_comment'),
   path(r'book_create',BookCreateView.as_view(), name='book_create'),
 ]

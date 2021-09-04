@@ -1,10 +1,13 @@
 from django import forms
-from .models import Book, Category
+from .models import BookComment, Category
 
 class BookSearchForm(forms.Form):
   search=forms.CharField(label='')
 
-
+class BookCommentForm(forms.ModelForm):
+  class Meta:
+    model=BookComment
+    fields=['evaluation','title','spoiler','comment']
 
 class BookCreateForm(forms.Form):
   data=[(0,'無し')]

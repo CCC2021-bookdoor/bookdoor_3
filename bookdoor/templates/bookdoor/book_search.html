@@ -28,7 +28,7 @@
 {% else %}
 {% for item in data %}
 <tr>
-  <th><a>{{ item.title }}</a></th>
+  <th><a href="{% url 'bookdoor:book_detail' item.code %}" >{{ item.title }}</a></th>
   <td>
     {% if item.author != None %}
     {{ item.author}}(著)

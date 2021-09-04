@@ -1,0 +1,41 @@
+{% extends 'bookdoor/layout.html' %}
+
+{% block title %}{{ book.title }}-BookDoor{% endblock %}
+
+{% block content %}
+<ul>
+  <li>
+    <tr>
+      <th>{{ book.title }}</th>
+      <br>
+      <td>
+        {% if book.author != '' %}
+        {{ book.author}}(著)
+        {% endif %}
+      </td>
+      <td>
+        {% if book.illustrator != '' %}
+        {{ book.illustrator}}(イラスト)
+        {% endif %}
+      </td>
+      <td>
+        {% if book.translator != '' %}
+        {{ book.translator }}(翻訳)
+        {% endif %}
+      </td>
+      <br>
+      <td>
+        <div><a href="{{ book.url }}">アマゾンリンク</a></div>
+      </td>
+    </tr>
+    <br><br><br><br>
+    {% for item in comment %}
+    <div>{{ item.nickname }}</div>
+    <div>{{ item.evaluation }}</div>
+    <div>{{ item.comment }}</div>
+    {% endfor %}
+  </li>
+  <li><a href="{% url 'bookdoor:book_comment' book.code %}">本を読んだ</a></li>
+</ul>
+
+{% endblock %}
