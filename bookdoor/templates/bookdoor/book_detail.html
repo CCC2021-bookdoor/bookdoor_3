@@ -23,7 +23,14 @@
         {{ book.translator }}(翻訳)
         {% endif %}
       </td>
-      <br>
+      <td>
+        <a href="{% url 'bookdoor:favorite_book' book.code %}">
+          お気に入り
+          {% if count == 0 %}未
+          {% else %}済
+          {% endif %}
+          </a>
+      </td>
       <td>
         <div><a href="{{ book.url }}">アマゾンリンク</a></div>
       </td>
@@ -32,9 +39,26 @@
     {% for item in comment %}
     <div>{{ item.nickname }}</div>
     <div>{{ item.evaluation }}</div>
+    <div>
+      <a href="{% url 'bookdoor:book_comment_good' item.code %}">
+        いいね
+        {% if item.count_good == 0 %}未
+        {% else %}済
+        {% endif %}
+      </a>
+    </div>
+    <div>
+    <a href="{% url 'bookdoor:book_comment_report' item.code %}">
+      通報
+      {% if item.count_report == 0 %}未
+      {% else %}済
+      {% endif %}
+      </a>
+    </div>
     <div>{{ item.comment }}</div>
     {% endfor %}
   </li>
+  <br><br><br>
   <li><a href="{% url 'bookdoor:book_comment' book.code %}">本を読んだ</a></li>
 </ul>
 

@@ -102,6 +102,7 @@ class BookDetailView(TemplateView):
       'form':BookSearchForm(),
       'comment':'',
       'book':'',
+      'count':0,
     }
 
   def get(self,request,book_code):
@@ -110,16 +111,19 @@ class BookDetailView(TemplateView):
     comment=[]
     for item in comment_item:
       if len(item.comment) != 0:
-        profile=Profile.objects.get(owner=request.user)
+        profile=Profile.objects.get(owner=item.writer)
         item.nickname=profile.nickname
-        # if request.user.is_authenticated:
-        #   owner=self.request.user
-        #   count_comment=BookComment.objects.get(code=item['code'])
-        #   count_good=BookCommentGood.objects.filter(owner=owner,comment=count_comment).count()
-        #   count_report=BookCommentReport.objects.filter(owner=owner,comment=count_comment).count()
-        #   item['count_good']=count_good
-        #   item['count_report']=count_report
+        if request.user.is_authenticated:
+          owner=self.request.user
+          count_comment=BookComment.objects.get(code=item.code)
+          count_good=BookCommentGood.objects.filter(owner=owner,comment=count_comment).count()
+          count_report=BookCommentReport.objects.filter(owner=owner,comment=count_comment).count()
+          item.count_good=count_good
+          item.count_report=count_report
         comment.append(item)
+    if request.user.is_authenticated:
+      count=FavoriteBook.objects.filter(owner=request.user,book=book).count()
+      self.params['count']=count
     self.params['comment']=comment
     self.params['book']=book
     return render(request,'bookdoor/book_detail.html', self.params)
@@ -177,6 +181,68 @@ class BookCommentView(LoginRequiredMixin,TemplateView):
         code=code,date=date)
       value.save()
     return redirect(to='/book_detail/'+str(book_code))
+
+
+@login_required
+def book_comment_good(request,code):
+  owner=request.user
+  comment=BookComment.objects.get(code=code)
+  count=BookCommentGood.objects.filter(owner=owner,comment=comment).count()
+  if count<=0:
+    date=datetime.date.today()
+    good=BookCommentGood(owner=owner,comment=comment,date=date)
+    good.save()
+    comment.good+=1
+    comment.save()
+  else:
+    good=BookCommentGood.objects.filter(owner=owner,comment=comment)
+    for item in good:
+      item.delete()
+      comment.good-=1
+      comment.save()
+  book_id=comment.book
+  book=Book.objects.get(id=book_id.id)
+  book_code=book.code
+  return redirect(to='/book_detail/'+str(book_code))
+
+
+@login_required
+def book_comment_report(request,code):
+  owner=request.user
+  comment=BookComment.objects.get(code=code)
+  count=BookCommentReport.objects.filter(owner=owner,comment=comment).count()
+  if count<=0:
+    date=datetime.date.today()
+    report=BookCommentReport(owner=owner,comment=comment,date=date)
+    report.save()
+    comment.report+=1
+    comment.save()
+  else:
+    report=BookCommentReport.objects.filter(owner=owner,comment=comment)
+    for item in report:
+      item.delete()
+      comment.report-=1
+      comment.save()
+  book_id=comment.book
+  book=Book.objects.get(id=book_id.id)
+  book_code=book.code
+  return redirect(to='/book_detail/'+str(book_code))
+
+
+@login_required
+def favorite_book(request,code):
+  owner=request.user
+  book=Book.objects.get(code=code)
+  count=FavoriteBook.objects.filter(owner=owner,book=book).count()
+  if count<=0:
+    favorite=FavoriteBook(owner=owner,book=book)
+    favorite.save()
+  else:
+    favorite=FavoriteBook.objects.filter(owner=owner,book=book)
+    item=favorite[0]
+    item.delete()
+  book_code=book.code
+  return redirect(to='/book_detail/'+str(book_code))
 
 
 class BookCreateView(LoginRequiredMixin,TemplateView):
