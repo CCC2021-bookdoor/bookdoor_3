@@ -562,45 +562,7 @@ class BookSearchView(TemplateView):
 
     self.params={
       'form':BookSearchForm(),
-      'search':'',
-      'data':'',
-      'count':'',
-      'category':Category.objects.all(),
-      'category_id':'',
-    }
-
-  def get(self,request,category_id):
-    if category_id == 0 :
-      data=Book.objects.all()
-    else:
-      data=Book.objects.filter(category_id=category_id)
-    self.params['data']=data
-    self.params['count']=len(data)
-    self.params['category_id']=category_id
-    return render(request,'bookdoor/book_search.html', self.params)
-
-  def post(self,request,category_id):
-    search=str(request.POST['search'])
-    data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|Q(illustrator__icontains=search)|Q(translator__icontains=search)|Q(publisher__icontains=search))
-    if category_id != 0:
-      data=filter(lambda x: x["category_id"] == category_id, data)
-    if isinstance(data, filter):
-      data=[]
-      self.params['count']=0
-    self.params['data']=data
-    self.params['form']=BookSearchForm(request.POST)
-    self.params['search']=request.POST['search']
-    self.params['category_id']=category_id
-    return render(request, 'bookdoor/book_search.html',self.params)
-
-
-class BookSearchCategoriView(TemplateView):
-  
-  def __init__(self):
-
-    self.params={
-      'form':BookSearchForm(),
-      'search':'',
+      'search':'None',
       'data':'',
       'count':'',
       'category':Category.objects.all(),
@@ -608,19 +570,44 @@ class BookSearchCategoriView(TemplateView):
     }
 
   def get(self,request,category_id,search):
-    data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|Q(illustrator__icontains=search)|Q(translator__icontains=search)|Q(publisher__icontains=search))
-    if category_id != 0:
-      data=filter(lambda x: x["category_id"] == category_id, data)
-    if isinstance(data, filter):
-      data=[]
-      self.params['count']=0
+    if search != 'None' and category_id != 0:
+      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
+        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
+          Q(publisher__icontains=search)).filter(category_id=category_id)
+    elif category_id != 0:
+      data=Book.objects.filter(category_id=category_id)
+    elif search != 'None':
+      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
+        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
+          Q(publisher__icontains=search))
+    else:
+      data=Book.objects.all()
+    self.params['count']=len(data)
     self.params['data']=data
-    initial_dict=dict(search=search)
-    self.params['form']=BookSearchForm(request.GET or None, initial=initial_dict)
+    if search != 'None':
+      initial_dict=dict(search=search)
+      self.params['form']=BookSearchForm(request.GET or None, initial=initial_dict)
+    self.params['search']=search
     self.params['category_id']=category_id
     return render(request,'bookdoor/book_search.html', self.params)
 
   def post(self,request,category_id,search):
+    if request.POST['search'] == '':
+      return redirect(to='/book_search/'+str(category_id)+'/None')
+    search=request.POST['search']
+    if category_id != 0:
+      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
+        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
+          Q(publisher__icontains=search)).filter(category_id=category_id)
+    else:
+      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
+        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
+          Q(publisher__icontains=search))
+    self.params['count']=len(data)
+    self.params['data']=data
+    self.params['form']=BookSearchForm(request.POST)
+    self.params['search']=search
+    self.params['category_id']=category_id
     return render(request, 'bookdoor/book_search.html',self.params)
 
 
@@ -775,6 +762,136 @@ def favorite_book(request,code):
     item.delete()
   book_code=book.code
   return redirect(to='/book_detail/'+str(book_code))
+
+
+class BookCommentListView(LoginRequiredMixin,TemplateView):
+  
+  def __init__(self):
+
+    self.params={
+      'form':BookSearchForm(),
+      'search':'None',
+      'data':'',
+      'count':'',
+      'category':Category.objects.all(),
+      'category_id':'',
+    }
+
+  def get(self,request,category_id,search):
+    if search != 'None' and category_id != 0:
+      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
+        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
+          Q(publisher__icontains=search)).filter(category_id=category_id)
+    elif category_id != 0:
+      data=Book.objects.filter(category_id=category_id)
+    elif search != 'None':
+      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
+        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
+          Q(publisher__icontains=search))
+    else:
+      data=Book.objects.all()
+    my_data=[]
+    for item in data:
+      count = BookComment.objects.filter(writer=request.user,book=item)
+      if len(count) > 0:
+        my_data.append(item)
+    self.params['count']=len(my_data)
+    self.params['data']=my_data
+    if search != 'None':
+      initial_dict=dict(search=search)
+      self.params['form']=BookSearchForm(request.GET or None, initial=initial_dict)
+    self.params['search']=search
+    self.params['category_id']=category_id
+    return render(request,'bookdoor/book_comment_list.html', self.params)
+
+  def post(self,request,category_id,search):
+    if request.POST['search'] == '':
+      return redirect(to='/book_search/'+str(category_id)+'/None')
+    search=request.POST['search']
+    if category_id != 0:
+      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
+        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
+          Q(publisher__icontains=search))
+    else:
+      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
+        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
+          Q(publisher__icontains=search)).filter(category_id=category_id)
+    my_data=[]
+    for item in data:
+      count = BookComment.objects.filter(writer=request.user,book=item)
+      if len(count) > 0:
+        my_data.append(item)
+    self.params['count']=len(my_data)
+    self.params['data']=my_data
+    self.params['form']=BookSearchForm(request.POST)
+    self.params['search']=search
+    self.params['category_id']=category_id
+    return render(request, 'bookdoor/book_search.html',self.params)
+
+
+class FavoriteBookListView(LoginRequiredMixin,TemplateView):
+  
+  def __init__(self):
+
+    self.params={
+      'form':BookSearchForm(),
+      'search':'None',
+      'data':'',
+      'count':'',
+      'category':Category.objects.all(),
+      'category_id':'',
+    }
+
+  def get(self,request,category_id,search):
+    if search != 'None' and category_id != 0:
+      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
+        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
+          Q(publisher__icontains=search)).filter(category_id=category_id)
+    elif category_id != 0:
+      data=Book.objects.filter(category_id=category_id)
+    elif search != 'None':
+      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
+        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
+          Q(publisher__icontains=search))
+    else:
+      data=Book.objects.all()
+    my_data=[]
+    for item in data:
+      count = FavoriteBook.objects.filter(owner=request.user,book=item).count()
+      if count > 0:
+        my_data.append(item)
+    self.params['count']=len(my_data)
+    self.params['data']=my_data
+    if search != 'None':
+      initial_dict=dict(search=search)
+      self.params['form']=BookSearchForm(request.GET or None, initial=initial_dict)
+    self.params['search']=search
+    self.params['category_id']=category_id
+    return render(request,'bookdoor/favorite_book_list.html', self.params)
+
+  def post(self,request,category_id,search):
+    if request.POST['search'] == '':
+      return redirect(to='/favorite_book_list/'+str(category_id)+'/None')
+    search=request.POST['search']
+    if category_id != 0:
+      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
+        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
+          Q(publisher__icontains=search))
+    else:
+      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
+        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
+          Q(publisher__icontains=search)).filter(category_id=category_id)
+    my_data=[]
+    for item in data:
+      count = FavoriteBook.objects.filter(writer=request.user,book=item)
+      if len(count) > 0:
+        my_data.append(item)
+    self.params['count']=len(my_data)
+    self.params['data']=my_data
+    self.params['form']=BookSearchForm(request.POST)
+    self.params['search']=search
+    self.params['category_id']=category_id
+    return render(request, 'bookdoor/favorite_book_list.html',self.params)
 
 
 class BookCreateView(LoginRequiredMixin,TemplateView):

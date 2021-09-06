@@ -2,7 +2,7 @@ from django import forms
 from .models import BookComment, Category
 
 class BookSearchForm(forms.Form):
-  search=forms.CharField(label='')
+  search=forms.CharField(label='',required=None)
 
 class BookCommentForm(forms.ModelForm):
   class Meta:
