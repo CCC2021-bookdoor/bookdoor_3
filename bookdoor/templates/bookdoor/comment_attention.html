@@ -1,0 +1,8 @@
+{% extends 'bookdoor/layout.html' %}
+
+{% block title %}Attention{% endblock %}
+
+{% block content %}
+<div>一日に3回までしか本のコメントできません</div>
+<div><a href="{% url 'bookdoor:index' %}">ホームに戻る</a></div>
+{% endblock %} 
