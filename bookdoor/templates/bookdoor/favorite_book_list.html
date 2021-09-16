@@ -3,16 +3,20 @@
 {% block title %}{{ search }}-BookDoor{% endblock %}
 
 {% block content %}
-<form action="{% url 'bookdoor:book_search' category_id 'None' %}" method="post">
+<form action="{% url 'bookdoor:favorite_book_list' category_id 'None' %}" method="post">
   {% csrf_token %}
   {{ form }}
   <input type="submit" value="search">
 </form>
 <br><br><br>
 <div>
-  <div><a href="{% url 'bookdoor:book_search' 0 search %}">すべて</a></div>
+  <div><a href="{% url 'bookdoor:favorite_book_list' 0 search %}">すべて</a></div>
   {% for item in category %}
-  <div><a href="{% url 'bookdoor:book_search' item.id search %}">{{ item.category }}</a></div>
+  <div>
+    <a href="{% url 'bookdoor:favorite_book_list' item.id search %}">
+      {{ item.category }}
+    </a>
+  </div>
   {% endfor %}
 </div>
 {% if count == 0 %}
