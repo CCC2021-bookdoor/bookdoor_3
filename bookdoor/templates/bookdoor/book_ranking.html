@@ -1,0 +1,19 @@
+{% extends 'bookdoor/layout.html' %}
+
+{% block title %}BookDoor{% endblock %}
+
+{% block content %}
+<div>
+  {% for item in data %}
+  <div>{{ item.category.category }}</div>
+  {% if item.count == 0 %}
+  まだありません
+  {% else %}
+  {% for book in item.book %}
+  <div>{{ forloop.counter }}位</div>
+  <div>{{ book.title }}</div>
+  {% endfor %}
+  {% endif %}
+  {% endfor %}
+</div>
+{% endblock %}
