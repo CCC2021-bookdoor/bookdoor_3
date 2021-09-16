@@ -38,7 +38,7 @@ class BookComment(models.Model):
   spoiler=models.BooleanField(verbose_name='',default=False)
   date=models.DateField(blank=True,null=True)
   good=models.IntegerField(default=0)
-  bad=models.IntegerField(default=0)
+  age=models.IntegerField(default=0)
   report=models.IntegerField(default=0)
   
   def __str__(self):

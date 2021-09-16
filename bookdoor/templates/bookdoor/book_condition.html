@@ -4,20 +4,18 @@
 
 {% block content %}
 <div>
-  カテゴリー
-  <div><a href="{% url 'bookdoor:index'%}">すべて</a></div>
+  <div><a href="{% url 'bookdoor:book_condition' 0 age %}">すべて</a></div>
   {% for item in category %}
   <div>
-    <a href="{% url 'bookdoor:book_condition' item.id 0 %}">{{ item.category }}</a>
+    <a href="{% url 'bookdoor:book_condition' item.id age %}">{{ item.category }}</a>
   </div>
   {% endfor %}
 </div>
 <div>
-  年齢
-  <div><a href="{% url 'bookdoor:index'%}">全年齢</a></div>
+  <div><a href="{% url 'bookdoor:book_condition' category_id 100 %}">全年齢</a></div>
   {% for item in age_range %}
   <div>
-    <a href="{% url 'bookdoor:book_condition' 0 item %}">{{ item }}才</a>
+    <a href="{% url 'bookdoor:book_condition' category_id item %}">{{ item }}才</a>
   </div>
   {% endfor %}
 </div>
