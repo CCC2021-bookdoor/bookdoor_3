@@ -1,0 +1,21 @@
+{% extends 'accounts/layout.html' %}
+
+{% block title %}LOGIN{% endblock %}
+
+{% block content %}
+<form action="" method="POST">
+  {% csrf_token %}
+  <div>
+    {{ form.login }}
+  </div>
+  <div>
+    {{ form.password }}
+  </div>
+  <div>
+    <button type="submit"> ログイン</button>
+  </div>
+</form>
+<div>
+  <a href="{% url 'accounts:account_signup' %}">サインアップはこちら</a>
+</div>
+{% endblock %}

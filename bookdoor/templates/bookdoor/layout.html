@@ -1,0 +1,45 @@
+{% load static %}
+<!doctype>
+<html lang="ja">
+  <head>
+    <meta charset="="utf-8>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css"
+    href="{% static 'bookdoor/css/layout.css' %}">
+  </head>
+  <body>
+    <header class="page-hearder">
+      <h1><a href="{% url 'bookdoor:index' %}"><img class="logo" src="../../static/bookdoor/image/logo.jpg" alt="BookDoor"></a></h1>
+      <ul class="main-nav">
+        <li>
+          <div><a href="{% url 'bookdoor:book_ranking' %}">ランキング</a></div>
+        </li>
+        <li>
+          <div><a href="{% url 'bookdoor:book_search' 0 'None' %}">サーチ</a></div>
+        </li>
+        <li>
+          <div>
+            <a href="{% url 'bookdoor:comment_search' 0 'None' 0 %}">コメントサーチ</a>
+          </div>
+        </li>
+        <li>
+          <div><a href="{% url 'bookdoor:book_comment_list' 0 'None' %}">読んだ本</a></div>
+        </li>
+        <li>
+          <div>
+            <a href="{% url 'bookdoor:favorite_book_list' 0 'None' %}">
+              <ruby>お気に入り
+                <rt>おきにいり</rt>
+              </ruby>
+            </a>
+          </div>
+        </li>
+        <li>
+          <div>
+            <a href="{% url 'accounts:profile' %}">プロフィール</a>
+          </div>
+        </li>
+    </header>
+    {% block content %}{% endblock %}
+  </body>
+</html>

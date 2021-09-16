@@ -1,0 +1,16 @@
+{% extends 'bookdoor/layout.html' %}
+
+{% block title %}Comment_BookDoor{% endblock %}
+
+{% block content %}
+<div>本のタイトル：{{ book.title }}</div>
+<div>{{ attention }}</di<div>
+  <form  method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="value" >
+  </form>
+</div>
+
+
+{% endblock %}

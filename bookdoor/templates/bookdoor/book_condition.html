@@ -1,0 +1,33 @@
+{% extends 'bookdoor/layout.html' %}
+
+{% block title %}BookDoor{% endblock %}
+
+{% block content %}
+<div>
+  <div><a href="{% url 'bookdoor:book_condition' 0 age %}">すべて</a></div>
+  {% for item in category %}
+  <div>
+    <a href="{% url 'bookdoor:book_condition' item.id age %}">{{ item.category }}</a>
+  </div>
+  {% endfor %}
+</div>
+<div>
+  <div><a href="{% url 'bookdoor:book_condition' category_id 100 %}">全年齢</a></div>
+  {% for item in age_range %}
+  <div>
+    <a href="{% url 'bookdoor:book_condition' category_id item %}">{{ item }}才</a>
+  </div>
+  {% endfor %}
+</div>
+<div>
+  <div>おすすめの本</div>
+  {% if attention == 1 %}
+  <duv>あなたはすべての本を読みました</duv>
+  {% else %}
+  {% for item in books %}
+  <div><a href="{% url 'bookdoor:book_detail' item.code %}">{{ item.title }}</a></div>
+  <br><br><br>
+  {% endfor %}
+  {% endif %}
+</div>
+{% endblock %}

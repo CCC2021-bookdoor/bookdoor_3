@@ -1,0 +1,11 @@
+{% extends 'accounts/layout.html' %}
+
+{% block title %}LOGOUT{% endblock %}
+
+{% block content %}
+<div>ログアウトしますか？</div>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">ログアウト</button>
+</form>
+{% endblock %}
