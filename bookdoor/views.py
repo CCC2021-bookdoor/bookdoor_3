@@ -894,6 +894,135 @@ class FavoriteBookListView(LoginRequiredMixin,TemplateView):
     return render(request, 'bookdoor/favorite_book_list.html',self.params)
 
 
+class BookRankingView(TemplateView):
+  
+  def __init__(self):
+
+    self.params={
+      'data':'',
+    }
+
+  def get(self,request):
+    data=[]
+    categories=Category.objects.all()
+    for category in categories:
+      books=Book.objects.filter(category_id=category.id)
+      for book in books:
+        count=BookComment.objects.filter(book=book).count()
+        book.count=count
+      if len(books) >1:
+        books=sorted(books, key=lambda r: r.count, reverse=True)
+      if len(books) == 0:
+        data.append(
+          {'category':category,
+          'book':books,
+          'count':0}
+        )
+      elif len(books) < 5:
+        data.append(
+          {'category':category,
+          'book':books[0:len(books)-1],
+          'count':len(books)-1}
+        )
+      else:
+        data.append(
+          {'category':category.category,
+          'book':books[0:4],
+          'count':5}
+        )
+
+    self.params['data']=data 
+    return render(request,'bookdoor/book_ranking.html', self.params)
+
+  def post(self,request):
+    return render(request, 'bookdoor/book_ranking.html',self.params)
+
+
+class CommentSearchView(TemplateView):
+  
+  def __init__(self):
+
+    self.params={
+      'form':BookSearchForm(),
+      'search':'None',
+      'data':'',
+      'category':Category.objects.all(),
+      'category_id':'',
+      'evaluation':'',
+      'evaluation_list':[5,4,3,2,1],
+    }
+
+  def get(self,request,category_id,search,evaluation):
+    if search != 'None':
+      data=BookComment.objects.filter(Q(title__icontains=search)|\
+        Q(comment__icontains=search)).filter(title__isnull = None,\
+          comment__isnull = None )
+    else:
+      data=BookComment.objects.filter(title__isnull = False, comment__isnull = False)
+    
+    data_list=[]
+    if category_id != 0 and evaluation != 0:
+      for item in data:
+        if item.book.category_id == category_id and item.evaluation == evaluation:
+          data_list.append(item)
+      data=data_list
+    elif category_id !=0:
+      for item in data:
+        if item.book.category_id == category_id :
+          data_list.append(item)
+      data=data_list
+    elif evaluation !=0:
+      for item in data:
+        if item.evaluation == evaluation:
+          data_list.append(item)
+      data=data_list
+
+    self.params['data']=sorted(data, key = lambda x: x.date,reverse=True)
+
+    if search != 'None':
+      initial_dict=dict(search=search)
+      self.params['form']=BookSearchForm(request.GET or None, initial=initial_dict)
+    self.params['search']=search
+    self.params['category_id']=category_id
+    self.params['evaluation']=evaluation
+    return render(request,'bookdoor/comment_search.html', self.params)
+
+  def post(self,request,category_id,search,evaluation):
+    if request.POST['search'] == '':
+      return redirect(to='/comment_search/'+str(category_id)+'/None/'+str(evaluation))
+    search=request.POST['search']
+    data=BookComment.objects.filter(Q(title__icontains=search)|\
+      Q(comment__icontains=search))\
+        .filter(title__isnull = False, comment__isnull = False)
+    
+    data_list=[]
+    if category_id != 0 and evaluation != 0:
+      for item in data:
+        if item.book.category_id == category_id and item.evaluation == evaluation:
+          data_list.append(item)
+      data=data_list
+    elif category_id !=0:
+      for item in data:
+        if item.book.category_id == category_id :
+          data_list.append(item)
+      data=data_list
+    elif evaluation !=0:
+      for item in data:
+        if item.evaluation == evaluation:
+          data_list.append(item)
+      data=data_list
+
+    self.params['data']=sorted(data, key = lambda x: x.date,reverse=True)
+    
+    if search != 'None':
+      initial_dict=dict(search=search)
+      self.params['form']=BookSearchForm(request.GET or None, initial=initial_dict)
+    self.params['search']=search
+    self.params['category_id']=category_id
+    self.params['evaluation']=evaluation
+    return render(request,'bookdoor/comment_search.html', self.params)
+
+
 class BookCreateView(LoginRequiredMixin,TemplateView):
 
   def __init__(self):
