@@ -1,0 +1,44 @@
+{% extends 'bookdoor/layout.html' %}
+
+{% block title %}{{ search }}-BookDoor{% endblock %}
+
+{% block content %}
+<form action="{% url 'bookdoor:comment_search' category_id 'None' evaluation %}" method="post">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="search">
+</form>
+<br><br><br>
+<div>
+  <div><a href="{% url 'bookdoor:comment_search' 0 search evaluation %}">すべて</a></div>
+  {% for item in category %}
+  <div>
+    <a href="{% url 'bookdoor:comment_search' item.id search evaluation %}">
+      {{ item.category }}
+    </a>
+  </div>
+  {% endfor %}
+  <div>
+  <br><br>
+  評価
+  <div><a href="{% url 'bookdoor:comment_search' category_id search 0 %}">すべて</a></div>
+  {% for item in evaluation_list %}
+  <div>
+    <a href="{% url 'bookdoor:comment_search' category_id search item %}">
+      {{ item }}
+    </a>
+  </div>
+  {% endfor %}
+  <br><br>
+</div>
+{% for item in data %}
+<div>
+  {{ item.title }}
+  {{ item.comment }}
+  <div>
+    評価：{{ item.evaluation }}
+  </div>
+</div>
+<br>
+{% endfor %}
+{% endblock %}

@@ -36,6 +36,11 @@
   <div>
     <a href="{% url 'account_logout' %}">ログアウトする</a>
   </div>
+  {% if user_data.code == 'aaaaaaaaaa' %}
+  <div>
+    <a href="{% url 'bookdoor:book_create' %}">本作成</a>
+  </div>
+  {% endif %}
 </div>
 
 {% endblock %}

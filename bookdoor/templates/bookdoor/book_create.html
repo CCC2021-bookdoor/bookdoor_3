@@ -1,0 +1,15 @@
+{% extends 'bookdoor/layout.html' %}
+
+{% block title %}Book_Create{% endblock %}
+
+{% block content %}
+<div>
+  <div>
+    <form  method="post">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="create" >
+    </form>
+  </div>
+</div>
+{% endblock %}
