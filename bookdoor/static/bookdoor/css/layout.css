@@ -1,13 +1,313 @@
-.page-hearder{
-  display:flex;
+.container {
+  max-width: 95%;
+}
+
+.carousel{
+  /*サイズ指定*/
+ height:200px;
+}
+
+svg{
+
+  height:200px;
+  display: flex;
+}
+
+img{
+  height: 180px;
+}
+
+h4-1{
+  color:gold;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: large;
+}
+h4-2{
+  color:silver;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: large;
+}
+h4-3{
+  color:#8c4841;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: large;
+}
+h4-4{
+  color:silver;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: large;
+}
+
+.midori{
+  background-color: #639263;
+}
+
+.btn-pink{
+  background-color: pink;
+}
+
+.bord{
+  border-bottom: black;
+}
+
+/* ランキングの上の冠画像 */
+.images{
+  width: 50px;
+}
+
+.author{
+  color: #8c4841;
+}
+
+/* 読んだ本に登録 */
+.btn-green-moon {
+  background: #56ab2f;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #a8e063, #56ab2f);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #a8e063, #56ab2f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: #fff;
+  border: 3px solid #eee;
+}
+
+.btn-green-fav {
+  background: #e0c425;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #d1cf5f, #b3bd2e);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #e0de63, #a9ab2f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: #fff;
+  border: 3px solid #eee;
+}
+
+/* お気に入り */
+.btn-circle {
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  padding: 0;
+  border-radius: 50%;
+  display:inline-block
+}
+
+.btn-circle i {
+  position: relative;
+  top: -1px;
+}
+
+.example {/*親div*/
+  position: relative;/*相対配置*/
+}
+
+.example button {
+  position: absolute;/*絶対配置*/
+  color: white;/*文字は白に*/
+  top: 0;
+  left: 0;
+  background-color:rgba(255,241,0,0.2);
+}
+
+/* アカウント（まさしが作った） */
+.login-container{
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+.login-form-1{
+  padding: 5%;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-1 h3{
+  text-align: center;
+  color: #333;
+}
+
+.login-container form{
+  padding: 10%;
+}
+.btnSubmit
+{
+  width: 50%;
+  border-radius: 1rem;
+  padding: 1.5%;
+  border: none;
+  cursor: pointer;
+}
+.login-form-1 .btnSubmit{
+  font-weight: 600;
+  color: #fff;
+  background-color: #0062cc;
+}
+
+/* 星五つ */
+
+/* コメント作成 */
+.box5 {
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  border: double 5px #4ec4d3;
+}
+.box5 p {
+  margin: 0; 
+  padding: 0;
+}
+
+.box7{
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  color: #474747;
+  background: whitesmoke;/*背景色*/
+  border-left: double 7px #4ec4d3;/*左線*/
+  border-right: double 7px #4ec4d3;/*右線*/
+}
+.box7 p {
+  margin: 0; 
+  padding: 0;
+}
+
+/* ランキングの順位 */
+.flex{
+  display: flex;
   justify-content: space-between;
 }
 
-.main-nav{
+/* 本の詳細画面のコメント一覧 */
+.comment{
   display: flex;
-  list-style: none;
+}
+.comment h5{
+  
+  line-height: 40px;
+  margin-left: 10px;
 }
 
-.main-nav li{
-  margin-left: 36px;
+
+/* コメントのいいね */
+.good{
+  display: flex;
 }
+
+.tuuhou{
+  margin-left: auto;
+}
+
+
+/* コメント一覧　題名　内容 */
+.box6 {
+  padding: 0.5em 1em;
+  border: double 5px #4ec4d3;
+}
+.box6 p {
+  margin: 0; 
+  padding: 0;
+}
+
+.box8{
+  padding: 0.5em 1em;
+  margin: 1em 0;
+  color: #474747;
+  background: whitesmoke;/*背景色*/
+  border-left: double 7px #4ec4d3;/*左線*/
+  border-right: double 7px #4ec4d3;/*右線*/
+}
+.box8 p {
+  margin: 0; 
+  padding: 0;
+}
+
+/* お気に入り画面のリボン */
+.ribbon4 {
+  display: inline-block;
+  position: relative;
+  height: 60px;/*高さ*/
+  line-height: 60px;/*高さ*/
+  text-align: center;
+  padding: 0 40px 0 18px;/*文字の左右の余白*/
+  font-size: 18px;/*文字サイズ*/
+  background: #ffc668;/*背景色*/
+  color: rgb(13, 70, 20);/*文字色*/
+  box-sizing: border-box;
+  border: outset;
+  border-right: none;
+}
+
+.ribbon4:after {
+  position: absolute;
+  content: '';
+  width: 0px;
+  height: 0px;
+  z-index: 1;
+}
+
+.ribbon4:after {
+  top: 0;
+  right: 0;
+  border-width: 30px 15px 30px 0px;
+  border-color: transparent #fff transparent transparent;
+  border-style: solid;
+}
+
+/* fav-category */
+
+.fav-category1{
+  background-color: #9df6f7;
+  border-radius: 3px;
+  padding: 3px;
+  border: outset;
+}
+
+.fav-category2{
+  background-color: #4be010;
+  border-radius: 3px;
+  padding: 3px;
+  border: outset;
+}
+
+/* プロフィール画面の読んだ本リボン */
+.ribbon3 {
+  display: inline-block;
+  position: relative;
+  height: 60px;/*高さ*/
+  line-height: 60px;/*高さ*/
+  text-align: center;
+  padding: 0 40px 0 18px;/*文字の左右の余白*/
+  font-size: 18px;/*文字サイズ*/
+  background: #613f09;/*背景色*/
+  color: rgb(255, 255, 255);/*文字色*/
+  box-sizing: border-box;
+  border: outset;
+  border-right: none;
+}
+
+.ribbon3:after {
+  position: absolute;
+  content: '';
+  width: 0px;
+  height: 0px;
+  z-index: 1;
+}
+
+.ribbon3:after {
+  top: 0;
+  right: 0;
+  border-width: 30px 15px 30px 0px;
+  border-color: transparent #fff transparent transparent;
+  border-style: solid;
+}
+
+.ribbon7 {
+  display: inline-block;
+  position: relative;
+  padding: 15px 20px;
+  font-size: 18px;/*フォントサイズ*/
+  color: #FFF;/*フォントカラー*/
+  background: #a6d3c8;/*リボンの色*/
+}
+
+.ribbon7:before {
+  position: absolute;
+  content: '';
+  top: 100%;
+  left: 0;
+  border: none;
+  border-bottom: solid 15px transparent;
+  border-right: solid 20px rgb(149, 158, 155);/*折り返し部分*/
+}
+
+

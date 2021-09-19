@@ -129,7 +129,7 @@ MEDIA_URL = '/pics/'
 MEDIA_ROOT = BASE_DIR
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/acoounts/profile'
+LOGIN_REDIRECT_URL = '/accounts/profile'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL='accounts.CustomUser'

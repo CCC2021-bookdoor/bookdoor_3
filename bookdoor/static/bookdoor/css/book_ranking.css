@@ -1,0 +1,20 @@
+.container {
+  max-width: 95%;
+}
+
+
+/* ランキングの上の冠画像 */
+.images{
+  width: 50px;
+}
+
+.author{
+  color: #8c4841;
+}
+
+
+/* ランキングの順位 */
+.flex{
+  display: flex;
+  justify-content: space-between;
+}

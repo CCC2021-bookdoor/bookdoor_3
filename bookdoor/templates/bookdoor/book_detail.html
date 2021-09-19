@@ -1,65 +1,120 @@
 {% extends 'bookdoor/layout.html' %}
+{% load static %}
 
-{% block title %}{{ book.title }}-BookDoor{% endblock %}
+{% block head %}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Small Business - Start Bootstrap Template</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Core theme CSS (includes Bootstrap)-->
+
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'bookdoor/css/book_detail.css' %}">
+{% endblock %}
 
 {% block content %}
-<ul>
-  <li>
-    <tr>
-      <th>{{ book.title }}</th>
-      <br>
-      <td>
+<div class="container px-2 px-lg-5 py-1 my-4">
+  <!-- Heading Row-->
+  <div class="row gx-4 gx-lg-5 mt-5 mb-2">
+    <div class="col-lg-3">
+      <h3>{{ book.title }}</h3>
+      <div class="author_item">
         {% if book.author != '' %}
-        {{ book.author}}(著)
+        <h5 class="author">{{ book.author}}(著)</h5>
         {% endif %}
-      </td>
-      <td>
         {% if book.illustrator != '' %}
-        {{ book.illustrator}}(イラスト)
+        <h5 class="author">{{ book.illustrator}}(イラスト)</h5>
         {% endif %}
-      </td>
-      <td>
         {% if book.translator != '' %}
-        {{ book.translator }}(翻訳)
+        <h5 class="author">{{ book.translator }}(翻訳)</h5>
         {% endif %}
-      </td>
-      <td>
-        <a href="{% url 'bookdoor:favorite_book' book.code %}">
-          お気に入り
-          {% if count == 0 %}未
+      </div>
+    </div>
+  </div>
+  <div class="row gx-4 gx-lg-5 align-items-center ">
+    <div class="col-lg-3 bg-white py-3 mt-0 align-self-start">
+      <div class="example">
+        <a href="{{ book.url }}">
+          <img class="img-fluid rounded" src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
+        </a>
+        <button class="btn btn-warning btn-circle m-1"><i class="far fa-star"></i></button>
+      </div>
+      <a href="{% url 'bookdoor:book_comment' book.code %}"><button class="col btn btn-green-moon btn-rounded">読んだ本に登録</button></a>
+      <a href="{% url 'bookdoor:favorite_book' book.code %}">
+        <button class="col btn btn-green-fav btn-rounded">
+          {% if count == 0 %}
+          お気に入りに登録
+          {% else %}
+          お気に入り解除
+          {% endif %}
+        </button>
+      </a>
+    </div>
+
+    <div class="col-lg-8 bg-white py-3 ml-lg-5">
+      <h2>コメント・感想</h2>
+      <!-- <div class="btn-group">
+        <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          コメント順番
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">人気順</a>
+          <a class="dropdown-item" href="#">新しい順</a>
+        </div>
+      </div> -->
+      <div class="border-bottom mb-2">
+        <select class="form-control">
+          <option>人気順</option>
+          <option>新しい順</option>
+        </select>
+      </div>
+      
+      {% for item in comment %}
+      <!-- <div>
+        <a href="{% url 'bookdoor:book_comment_good' item.code %}">
+          いいね
+          {% if item.count_good == 0 %}未
           {% else %}済
           {% endif %}
-          </a>
-      </td>
-      <td>
-        <div><a href="{{ book.url }}">アマゾンリンク</a></div>
-      </td>
-    </tr>
-    <br><br><br><br>
-    {% for item in comment %}
-    <div>{{ item.nickname }}</div>
-    <div>{{ item.evaluation }}</div>
-    <div>
-      <a href="{% url 'bookdoor:book_comment_good' item.code %}">
-        いいね
-        {% if item.count_good == 0 %}未
+        </a>
+      </div>
+      <div>
+      <a href="{% url 'bookdoor:book_comment_report' item.code %}">
+        通報
+        {% if item.count_report == 0 %}未
         {% else %}済
         {% endif %}
-      </a>
+        </a>
+      </div> -->
+      <div class="commnet_lists border-bottom mb-2 pb-2">
+        <div class="comment">
+          <img class="img-fluid rounded mb-4 mb-lg-0 images" src="https://images-fe.ssl-images-amazon.com/images/S/amazon-avatars-global/default._CR0,0,1024,1024_SX48_.png" alt="..." />
+          <h5>{{ item.nickname }}</h5>
+        </div>
+        <div>
+          <p class="result-rating-rate">
+            <span class="star5_rating" data-rate="3.8"></span>
+            <span class="number_rating">{{ item.evaluation }}</span>
+          </p>
+          <div class="form-group box8">
+            <h5>{{ item.title }}</h5>
+          </div>
+          <div class="form-group box6">
+            <h6>{{ item.comment }}</h6>
+          </div>
+          <div class="good">
+            <button type="button" class="btn btn-outline-success">いいね！</button>
+            <h4>10いいね</h4>
+            <div class="tuuhou"></div><button type="button" class="btn btn-outline-dark ">通報</button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
-    <div>
-    <a href="{% url 'bookdoor:book_comment_report' item.code %}">
-      通報
-      {% if item.count_report == 0 %}未
-      {% else %}済
-      {% endif %}
-      </a>
-    </div>
-    <div>{{ item.comment }}</div>
-    {% endfor %}
-  </li>
-  <br><br><br>
-  <li><a href="{% url 'bookdoor:book_comment' book.code %}">本を読んだ</a></li>
-</ul>
-
+  </div>
+</div>
 {% endblock %}

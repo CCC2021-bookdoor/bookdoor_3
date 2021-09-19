@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from .views import BookDoorView, BookSearchView, BookCreateView
 from .views import BookDetailView, BookCommentView, BookConditionView
-from .views import BookCommentListView,FavoriteBookListView,BookRankingView
+from .views import FavoriteBookListView,BookRankingView
 from .views import CommentSearchView
 
 app_name='bookdoor'
@@ -19,8 +19,6 @@ urlpatterns=[
      name='book_comment_report'),
   path(r'favorite_book/<str:code>',views.favorite_book,\
      name='favorite_book'),
-  path(r'book_comment_list/<int:category_id>/<str:search>',BookCommentListView.as_view(),\
-     name='book_comment_list'),
   path(r'favorite_book_list/<int:category_id>/<str:search>',\
     FavoriteBookListView.as_view(),name='favorite_book_list'),
   path(r'book_ranking',BookRankingView.as_view(),name='book_ranking'),

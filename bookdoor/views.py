@@ -19,6 +19,7 @@ class BookDoorView(TemplateView):
   def __init__(self,):
     self.params={
       'books':'',
+      'comment':'',
       'attention':'',
       'category':Category.objects.all(),
       'age_range':range(15),
@@ -275,6 +276,20 @@ class BookDoorView(TemplateView):
     if len(books) == 0:
       books=Book.objects.all().order_by('date').reverse()
 
+    comment=BookComment.objects.filter(good__gte=10,title=True,comment=True).order_by('date', 'good')
+    if len(comment) < 9:
+      comment=BookComment.objects.order_by('date', 'good')
+
+    comment=comment[0:8]
+    comment_set=[]
+    for i in range(len(comment)//3):
+      item={}
+      item['a']=comment[i*3]
+      item['b']=comment[i*3+1]
+      item['c']=comment[i*3+2]
+      comment_set.append(item)
+
+    self.params['comment']=comment_set
     self.params['books']=books
     return render(request,'bookdoor/index.html', self.params)
 
@@ -626,7 +641,7 @@ class BookDetailView(TemplateView):
     comment_item=BookComment.objects.filter(book=book.id)
     comment=[]
     for item in comment_item:
-      if len(item.comment) != 0:
+      if item.comment != None and item.title != None:
         profile=Profile.objects.get(owner=item.writer)
         item.nickname=profile.nickname
         if request.user.is_authenticated:
@@ -762,71 +777,6 @@ def favorite_book(request,code):
     item.delete()
   book_code=book.code
   return redirect(to='/book_detail/'+str(book_code))
-
-
-class BookCommentListView(LoginRequiredMixin,TemplateView):
-  
-  def __init__(self):
-
-    self.params={
-      'form':BookSearchForm(),
-      'search':'None',
-      'data':'',
-      'count':'',
-      'category':Category.objects.all(),
-      'category_id':'',
-    }
-
-  def get(self,request,category_id,search):
-    if search != 'None' and category_id != 0:
-      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
-        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
-          Q(publisher__icontains=search)).filter(category_id=category_id)
-    elif category_id != 0:
-      data=Book.objects.filter(category_id=category_id)
-    elif search != 'None':
-      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
-        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
-          Q(publisher__icontains=search))
-    else:
-      data=Book.objects.all()
-    my_data=[]
-    for item in data:
-      count = BookComment.objects.filter(writer=request.user,book=item)
-      if len(count) > 0:
-        my_data.append(item)
-    self.params['count']=len(my_data)
-    self.params['data']=my_data
-    if search != 'None':
-      initial_dict=dict(search=search)
-      self.params['form']=BookSearchForm(request.GET or None, initial=initial_dict)
-    self.params['search']=search
-    self.params['category_id']=category_id
-    return render(request,'bookdoor/book_comment_list.html', self.params)
-
-  def post(self,request,category_id,search):
-    if request.POST['search'] == '':
-      return redirect(to='/book_search/'+str(category_id)+'/None')
-    search=request.POST['search']
-    if category_id != 0:
-      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
-        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
-          Q(publisher__icontains=search))
-    else:
-      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
-        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
-          Q(publisher__icontains=search)).filter(category_id=category_id)
-    my_data=[]
-    for item in data:
-      count = BookComment.objects.filter(writer=request.user,book=item)
-      if len(count) > 0:
-        my_data.append(item)
-    self.params['count']=len(my_data)
-    self.params['data']=my_data
-    self.params['form']=BookSearchForm(request.POST)
-    self.params['search']=search
-    self.params['category_id']=category_id
-    return render(request, 'bookdoor/book_search.html',self.params)
 
 
 class FavoriteBookListView(LoginRequiredMixin,TemplateView):

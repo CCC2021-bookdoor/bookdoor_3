@@ -1,0 +1,19 @@
+.container {
+  max-width: 95%;
+}
+
+/* プロフィール画面の読んだ本リボン */
+.ribbon3 {
+  display: inline-block;
+  position: relative;
+  height: 60px;/*高さ*/
+  line-height: 60px;/*高さ*/
+  text-align: center;
+  padding: 0 40px 0 18px;/*文字の左右の余白*/
+  font-size: 18px;/*文字サイズ*/
+  background: #613f09;/*背景色*/
+  color: rgb(255, 255, 255);/*文字色*/
+  box-sizing: border-box;
+  border: outset;
+  border-right: none;
+}

@@ -1,0 +1,24 @@
+.container {
+  max-width: 95%;
+}
+
+.carousel{
+  /*サイズ指定*/
+ height:200px;
+}
+
+svg{
+
+  height:200px;
+  display: flex;
+}
+
+img{
+  height: 180px;
+}
+
+
+/* 幼稚園 */
+.btn-pink{
+  background-color: pink;
+}

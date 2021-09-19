@@ -1,19 +1,77 @@
 {% extends 'bookdoor/layout.html' %}
+{% load static %}
 
-{% block title %}BookDoor{% endblock %}
+{% block head %}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Small Business - Start Bootstrap Template</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Core theme CSS (includes Bootstrap)-->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'bookdoor/css/book_ranking.css' %}">
+{% endblock %}
 
 {% block content %}
-<div>
-  {% for item in data %}
-  <div>{{ item.category.category }}</div>
-  {% if item.count == 0 %}
-  まだありません
-  {% else %}
-  {% for book in item.book %}
-  <div>{{ forloop.counter }}位</div>
-  <div>{{ book.title }}</div>
-  {% endfor %}
-  {% endif %}
-  {% endfor %}
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+      <div class="text-center text-white">
+          <h1 class="display-4 fw-bolder">ランキング</h1>
+          <p class="lead fw-normal text-white-50 mb-0">ここには本の種類ごとに人気な順番で</p>
+      </div>
+  </div>
+</header>
+<div class="container px-4 px-lg-5 pt-1  bg-white">
+  <div class="row gx-4 gx-lg-5 align-items-center my-5">
+
+    <!-- Content Row-->
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          {% for item in data %}
+          <div class="row gx-4 gx-lg-5 mb-5 border-bottom">
+            <div class="col-md-2 mb-5 pl-3">
+                <h4 class="pl-5 pt-3">{{ item.category.category }}</h4>
+                <a href="ranking_category.html" class="btn btn-outline-success btn-lg ml-5 mt-5" role="button" aria-pressed="true">くわしく</a>
+            </div>
+            {% if item.count == 0 %}
+            まだありません
+            {% else %}
+            {% for book in item.book %}
+            <div class="col-md-2 mb-5">
+              <a href="{% url 'bookdoor:book_detail' book.code %}">
+                <div class="flex">
+                  {% if forloop.counter == 1 %}
+                  <img class="img-fluid rounded mb-4 mb-lg-0 images" src="https://1.bp.blogspot.com/-al_xSk3GL1o/XLAdSlunhRI/AAAAAAABSXQ/3_HokhAnxAA6X-noz5UOIm88i73rclf8gCLcBGAs/s200/mark_oukan_crown9.png" alt="..." />
+                  {% elif forloop.counter == 2 %}
+                  <img class="img-fluid rounded mb-4 mb-lg-0 images" src="https://4.bp.blogspot.com/-z8be5GXEMqc/XLAdPzglLmI/AAAAAAABSW0/ejH10sUufeEcXO3C320sc4KteX9b64rHgCLcBGAs/s200/mark_oukan_crown2_silver.png" alt="..." />
+                  {% elif forloop.counter == 3 %}
+                  <img class="img-fluid rounded mb-4 mb-lg-0 images" src="https://2.bp.blogspot.com/-aNak4afgYNg/XLAdQk9C9bI/AAAAAAABSW4/gFy0E_UQqi8lqaBUfYFdKQLt3yOE0mcnQCLcBGAs/s200/mark_oukan_crown3_bronze.png" alt="..." />
+                  {% elif forloop.counter == 4 %}
+                  <img class="img-fluid rounded mb-4 mb-lg-0 images" src="https://3.bp.blogspot.com/-e6bUBjIGqt0/XLAdR-W4LMI/AAAAAAABSXI/G11NBuYBplsuZOXIraBz9AGyvwnG0FpgQCLcBGAs/s200/mark_oukan_crown7_blue.png" alt="..." />
+                  {% elif forloop.counter == 5 %}
+                  <img class="img-fluid rounded mb-4 mb-lg-0 images" src="https://3.bp.blogspot.com/-t1a-cA06FmE/XLAdRtf0a7I/AAAAAAABSXE/wYw-vdktd0ctD0h7yp15jHNxZbSN7IKRACLcBGAs/s200/mark_oukan_crown6_green.png" alt="..." />
+                  {% endif %}
+                  <h5>{{ forloop.counter }}位</h5>
+                </div>
+                <div class="card" style="width: 100%;">
+                  <img class="img-fluid rounded mb-4 mb-lg-0" src="https://blog-001.west.edge.storage-yahoo.jp/res/blog-ca-2b/y828tyukai/folder/686422/45/64788645/img_0" alt="..." />
+                  <div class="card-body">
+                    <p class="card-text">{{ book.title }}</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            {% endfor %}
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

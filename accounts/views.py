@@ -2,33 +2,39 @@ from random import choices
 from django.views import View
 from django.shortcuts import render, redirect
 from accounts.models import CustomUser, Profile
+from bookdoor.models import BookComment
 from accounts.forms import ProfileForm, SignupUserForm,ProfileCreateForm
 from allauth.account import views
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 
 class ProfileView(LoginRequiredMixin,View):
+
+  def __init__(self,):
+    self.params={
+      'books':'',
+      'user_data':'',
+      'form': '',
+      'age':'',
+    }
+
   def get(self, request, *args, **kwargs):
     if Profile.objects.filter(owner=request.user).count()==0:
       return redirect(to='/accounts/profile_create')
+
     user_data=CustomUser.objects.get(id=request.user.id)
     today=datetime.date.today()
     birthday=user_data.birthday
     age=(int(today.strftime("%Y%m%d")) - int(birthday.strftime("%Y%m%d"))) // 10000
-    user_profile=Profile.objects.filter(owner=request.user).values('nickname','email')
-    return render(request, 'accounts/profile.html',{
-      'user_data':user_data,
-      'user_profile':user_profile[0],
-      'age':age,
-    })
-
-
-class ProfileEditView(View):
-  def get(self, request, *args, **kwargs):
     obj=Profile.objects.get(owner=request.user.id)
-    return render(request, 'accounts/profile_edit.html', {
-      'form': ProfileForm(instance=obj),
-    })
+
+    books=BookComment.objects.filter(writer=request.user)
+
+    self.params['books']=books
+    self.params['user_data']=user_data
+    self.params['form']=ProfileForm(instance=obj)
+    self.params['age']=age
+    return render(request, 'accounts/profile.html',self.params)
 
   def post(self, request, *args, **kwargs):
     obj=Profile.objects.get(owner=request.user.id)

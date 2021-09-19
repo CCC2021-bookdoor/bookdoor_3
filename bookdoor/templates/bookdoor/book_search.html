@@ -1,43 +1,100 @@
 {% extends 'bookdoor/layout.html' %}
+{% load static %}
 
 {% block title %}{{ search }}-BookDoor{% endblock %}
 
+{% block head %}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Small Business - Start Bootstrap Template</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Core theme CSS (includes Bootstrap)-->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'bookdoor/css/book_search.css' %}">
+{% endblock %}
+
 {% block content %}
-<form action="{% url 'bookdoor:book_search' category_id 'None' %}" method="post">
-  {% csrf_token %}
-  {{ form }}
-  <input type="submit" value="search">
-</form>
-<br><br><br>
-<div>
-  <div><a href="{% url 'bookdoor:book_search' 0 search %}">すべて</a></div>
-  {% for item in category %}
-  <div><a href="{% url 'bookdoor:book_search' item.id search %}">{{ item.category }}</a></div>
-  {% endfor %}
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+      <div class="text-center text-white">
+          <h1 class="display-4 fw-bolder">本けんさく</h1>
+          <p class="lead fw-normal text-white-50 mb-0">ジャンルを選択し本を検索することができます</p>
+      </div>
+  </div>
+</header>
+<div class="container px-lg-5 pt-1 bg-white">
+  <div class="row gx-4 gx-lg-5  my-5">
+    <!-- age choice -->
+    <div class="col-3 mb-3 clearfix">
+      <h4>ほんをけんさくする</h4>
+      <div class="input-group my-3">
+        <form action="{% url 'bookdoor:book_search' category_id 'None' %}" method="post">
+          {% csrf_token %}
+          {{ form }}
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+          </span>
+          <!-- <input type="text" class="form-control" placeholder="キーワードを入れる"> -->
+        </form>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          カテゴリ
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'bookdoor:book_search' 0 search %}">すべて</a>
+          {% for item in category %}
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'bookdoor:book_search' item.id search %}">
+            {{ item.category }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="col-8 ml-lg-5">
+      <div class="row gx-4 gx-lg-5 ml-lg-4">
+        {% if count == 0 %}
+        <div>存在しません</div>
+        {% else %}
+        {% for item in data %}
+        <div class="card mb-3 bg-light" >
+          <div class="row no-gutters position-relative">
+            <div class="col-md-2">
+              <img class="img-fluid rounded mb-4 mb-lg-0" src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
+            </div>
+            <div class="col-md-5">
+              <div class="card-body">
+                <a href="{% url 'bookdoor:book_detail' item.code %}">
+                  <h5 class="card-title">{{ item.title }}</h5>
+                </a>
+                {% if item.author != '' %}
+                <p class="card-text">{{ item.author}}(著)</p>
+                {% endif %}
+                {% if item.illustrator != '' %}
+                <p class="card-text">{{ item.illustrator}}(イラスト)</p>
+                {% endif %}
+                {% if item.translator != '' %}
+                <p class="card-text">{{ item.translator }}(翻訳)</p>
+                {% endif %}
+                <p class="card-text"><small class="text-muted">98人に読まれています。</small></p>
+              </div>
+            </div>
+            <div class="col-md-5 position-static">
+              <div class="card-body">
+                <a href="{% url 'bookdoor:book_detail' item.code %}" class="stretched-link">くわしくみる</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
 </div>
-{% if count == 0 %}
-<div>存在しません</div>
-{% else %}
-{% for item in data %}
-<tr>
-  <th><a href="{% url 'bookdoor:book_detail' item.code %}" >{{ item.title }}</a></th>
-  <td>
-    {% if item.author != None %}
-    {{ item.author}}(著)
-    {% endif %}
-  </td>
-  <td>
-    {% if item.illustrator != None %}
-    {{ item.illustrator}}(イラスト)
-    {% endif %}
-  </td>
-  <td>
-    {% if item.translator != None %}
-    {{ item.translator }}(翻訳)
-    {% endif %}
-  </td>
-</tr>
-<br>
-{% endfor %}
-{% endif %}
 {% endblock %}
