@@ -280,13 +280,21 @@ class BookDoorView(TemplateView):
     if len(comment) < 9:
       comment=BookComment.objects.order_by('date', 'good')
 
-    comment=comment[0:8]
+    k=0
+    comment_loop=[]
+    for item in comment:
+      if k >= 9:
+        break
+      if item.comment != None and item.title != None:
+        comment_loop.append(item)
+        k+=1
+
     comment_set=[]
-    for i in range(len(comment)//3):
+    for i in range(len(comment_loop)//3):
       item={}
-      item['a']=comment[i*3]
-      item['b']=comment[i*3+1]
-      item['c']=comment[i*3+2]
+      item['a']=comment_loop[i*3]
+      item['b']=comment_loop[i*3+1]
+      item['c']=comment_loop[i*3+2]
       comment_set.append(item)
 
     self.params['comment']=comment_set
@@ -322,8 +330,8 @@ class BookConditionView(TemplateView):
         average=0.0
         total=0
         count=0
-        if age != 100:
-          book_comments=BookComment.objects.filter(book=book,age = age)
+        if age != 0:
+          book_comments=BookComment.objects.filter(book=book,age__lte=age*3, age__gte=age*3-2)
         else:
           book_comments=BookComment.objects.filter(book=book)
 
@@ -386,8 +394,8 @@ class BookConditionView(TemplateView):
         if user == target_user:
           continue
 
-        if age != 100:
-          book_comments=BookComment.objects.filter(writer=user,age=age)
+        if age != 0:
+          book_comments=BookComment.objects.filter(writer=user,age__lte=age*3, age__gte=age*3-2)
         else:
           book_comments=BookComment.objects.filter(writer=user)
 
@@ -561,6 +569,29 @@ class BookConditionView(TemplateView):
     if len(books) == 0:
       books=Book.objects.all().order_by('date').reverse()
 
+
+    comment=BookComment.objects.filter(good__gte=10,title=True,comment=True).order_by('date', 'good')
+    if len(comment) < 9:
+      comment=BookComment.objects.order_by('date', 'good')
+
+    k=0
+    comment_loop=[]
+    for item in comment:
+      if k >= 9:
+        break
+      if item.comment != None and item.title != None:
+        comment_loop.append(item)
+        k+=1
+
+    comment_set=[]
+    for i in range(len(comment_loop)//3):
+      item={}
+      item['a']=comment_loop[i*3]
+      item['b']=comment_loop[i*3+1]
+      item['c']=comment_loop[i*3+2]
+      comment_set.append(item)
+
+    self.params['comment']=comment_set
     self.params['books']=books
     self.params['category_id']=category_id
     self.params['age']=age
@@ -597,6 +628,11 @@ class BookSearchView(TemplateView):
           Q(publisher__icontains=search))
     else:
       data=Book.objects.all()
+
+    for item in data:
+      count=BookComment.objects.filter(book=item).count()
+      item.count=count
+    
     self.params['count']=len(data)
     self.params['data']=data
     if search != 'None':

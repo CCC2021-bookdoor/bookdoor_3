@@ -26,17 +26,17 @@
   <div class="row mt-4">
     <div class="col-md-7">
       <div class="md-3">
-        <label for="exsampleInputusername1" class="form-label">ユーザーネーム</label>
+        <label for="exsampleInputusername1" class="form-label">ユーザーネーム：</label>
         <label for="exsampleInputusername1" class="form-label">{{ user_data.username }}</label>
         <!-- <input type="username" class="form-control" id="exsampleInputusername"> -->
       </div>
       <div class="mb-3">
-        <label for="exsampleInputage" class="form-label">登録日</label>
+        <label for="exsampleInputage" class="form-label">とうろくび：</label>
         <label for="exsampleInputage" class="form-label">{{ user_data.date }}</label>
         <!-- <input type="age" class="form-control" id="exsampleInputage"> -->
       </div>
       <div class="mb-3">
-        <label for="exsampleInputage" class="form-label">年齢</label>
+        <label for="exsampleInputage" class="form-label">ねんれい：</label>
         <label for="exsampleInputage" class="form-label">{{ age }}さい</label>
         <!-- <input type="age" class="form-control" id="exsampleInputage"> -->
       </div>
@@ -56,7 +56,7 @@
     {% if user_data.code == 'aaaaaaaaaa' %}
     <div>
       <a href="{% url 'bookdoor:book_create' %}">本作成</a>
-    </div>
+    </div><br>
     {% endif %}
     <div class="container mt-3 border-top pt-3">
       <div class="row">

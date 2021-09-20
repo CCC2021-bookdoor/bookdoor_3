@@ -22,7 +22,7 @@ urlpatterns=[
   path(r'favorite_book_list/<int:category_id>/<str:search>',\
     FavoriteBookListView.as_view(),name='favorite_book_list'),
   path(r'book_ranking',BookRankingView.as_view(),name='book_ranking'),
-  path(r'comment_seach/<int:category_id>/<str:search>/<int:evaluation>',\
+  path(r'comment_search/<int:category_id>/<str:search>/<int:evaluation>',\
     CommentSearchView.as_view(),name='comment_search'),
   path(r'book_create',BookCreateView.as_view(), name='book_create'),
 ]

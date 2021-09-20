@@ -11,6 +11,7 @@
 <title>Small Business - Start Bootstrap Template</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <!-- Core theme CSS (includes Bootstrap)-->
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -81,7 +82,7 @@
                 {% if item.translator != '' %}
                 <p class="card-text">{{ item.translator }}(翻訳)</p>
                 {% endif %}
-                <p class="card-text"><small class="text-muted">98人に読まれています。</small></p>
+                <p class="card-text"><small class="text-muted">{{ item.count }}人に読まれています。</small></p>
               </div>
             </div>
             <div class="col-md-5 position-static">

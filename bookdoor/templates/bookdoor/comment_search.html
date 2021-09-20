@@ -73,12 +73,12 @@
                 {% if item.book.translator != '' %}
                 <p class="card-text">{{ item.book.translator }}(翻訳)</p>
                 {% endif %}
-                <p class="card-text"><small class="text-muted">98人に読まれています。</small></p>
+                <p class="card-text"><small class="text-muted">{{ item.good }}人にいいねされています。</small></p>
               </div>
             </div>
             <div class="col-md-5 position-static">
               <div class="card-body">
-                <a href="#" class="stretched-link position-static">くわしくみる</a>
+                <a href="{% url 'bookdoor:book_detail' item.book.code %}" class="stretched-link position-static">くわしくみる</a>
                 <br><br><br>
                 <p class="card-text">{{ item.title }}</p>
                 <p class="card-text"><small class="text-muted"></small></p>
