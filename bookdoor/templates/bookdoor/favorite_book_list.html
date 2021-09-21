@@ -1,47 +1,98 @@
 {% extends 'bookdoor/layout.html' %}
+{% load static %}
 
 {% block title %}{{ search }}-BookDoor{% endblock %}
 
+{% block head %}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Small Business - Start Bootstrap Template</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Core theme CSS (includes Bootstrap)-->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'bookdoor/css/favorite_book.css' %}">
+{% endblock %}
+
 {% block content %}
-<form action="{% url 'bookdoor:favorite_book_list' category_id 'None' %}" method="post">
-  {% csrf_token %}
-  {{ form }}
-  <input type="submit" value="search">
-</form>
-<br><br><br>
-<div>
-  <div><a href="{% url 'bookdoor:favorite_book_list' 0 search %}">すべて</a></div>
-  {% for item in category %}
-  <div>
-    <a href="{% url 'bookdoor:favorite_book_list' item.id search %}">
-      {{ item.category }}
-    </a>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="btn-group">
+        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {% if category_id == 0 %}
+          カテゴリ
+          {% else %}
+          {% for item in category %}
+          {% if item.id == category_id %}
+          {{ item.category }}
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'bookdoor:favorite_book_list' 0  1 %}">すべて</a>
+          {% for item in category %}
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'bookdoor:favorite_book_list' item.id 1 %}">{{ item.category }}</a>
+          {% endfor %}
+      </div>
+    </div>
+    <nav class="navbar navbar-expand-lg p-3  ml-4">
+      <div>
+        <h3 class="ribbon4">お気に入りの本</h3>
+      </div>
+    </nav>
+    <div class="row gx-4 gx-lg-5">
+      {% if count == 0 %}
+      <div>存在しません</div>
+      {% else %}
+      {% for item in data %}
+      <div class="col-md-2 mb-5 position-relative">
+        <div class="card" style="width: 100%;">
+          <img class="img-fluid rounded mb-4 mb-lg-0" src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
+          <div class="card-body position-static">
+            <h5>{{ item.title }}</h5>
+            <!-- <h6 class="fav-author">一穂ミチ</h6> -->
+            <a href="{% url 'bookdoor:book_detail' item.code %}" class="stretched-link"></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>  
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        {% if books.has_previous %}
+        <li class="page-item disabled">
+          <a class="page-link" href="{% url 'bookdoor:favorite_book_list' category_id %}{{ data.previous_page_number }}" >まえへ</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1">まえへ</a>
+        </li>
+        {% endif %}
+        {% for page_num in page_range %}
+        {% if page_num == books.number %}
+        <li class="page-item"><a class="page-link" tabindex="-1">{{ page_num }}</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="{% url 'bookdoor:favorite_book_list' category_id page_num %}">{{ page_num }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if books.has_previous %}
+        <li class="page-item disabled">
+          <a class="page-link" href="{% url 'bookdoor:favorite_book_list' category_id %}{{ books.next_page_number }}" >つぎへ</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1">つぎへ</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
   </div>
-  {% endfor %}
 </div>
-{% if count == 0 %}
-<div>存在しません</div>
-{% else %}
-{% for item in data %}
-<tr>
-  <th><a href="{% url 'bookdoor:book_detail' item.code %}" >{{ item.title }}</a></th>
-  <td>
-    {% if item.author != None %}
-    {{ item.author}}(著)
-    {% endif %}
-  </td>
-  <td>
-    {% if item.illustrator != None %}
-    {{ item.illustrator}}(イラスト)
-    {% endif %}
-  </td>
-  <td>
-    {% if item.translator != None %}
-    {{ item.translator }}(翻訳)
-    {% endif %}
-  </td>
-</tr>
-<br>
-{% endfor %}
-{% endif %}
 {% endblock %}

@@ -1,46 +1,150 @@
 {% extends 'accounts/layout.html' %}
+{% load static %}
 
-{% block title %}Profile{% endblock %}
+{% block head %}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Small Business - Start Bootstrap Template</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Core theme CSS (includes Bootstrap)-->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/css/profile.css' %}">
+{% endblock %}
 
 {% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary p-3 pl-5">
+  <div class="ml-5">
+    <a class="navbar-brand" >プロフィール</a>
+  </div>
+</nav>
 
-<div>
-  <h5>プロフィール</h5>
-  <table>
-    <tbody>
-      <tr>
-        <th>code</th>
-        <td>{{ user_data.code }}</td>
-      </tr>
-      <tr>
-        <th>メールアドレス</th>
-        <td>{{ user_profile.email }}</td>
-      </tr>
-      <tr>
-        <th>ニックネーム</th>
-        <td>{{ user_profile.nickname }}</td>
-      </tr>
-      <tr>
-        <th>登録日</th>
-        <td>{{ user_data.date }}</td>
-      </tr>
-      <tr>
-        <th>年齢</th>
-        <td>{{ age }}歳</td>
-      </tr>
-    </tbody>
-  </table>
-  <div>
-    <a href="{% url 'accounts:profile_edit' %}">編集する</a>
-  </div>
-  <div>
-    <a href="{% url 'account_logout' %}">ログアウトする</a>
-  </div>
-  {% if user_data.code == 'aaaaaaaaaa' %}
-  <div>
-    <a href="{% url 'bookdoor:book_create' %}">本作成</a>
-  </div>
-  {% endif %}
-</div>
+<div class="container mb-3">
+  <div class="row mt-4">
+    <div class="col-md-7">
+      <div class="md-3">
+        <label for="exsampleInputusername1" class="form-label">ユーザーネーム：</label>
+        <label for="exsampleInputusername1" class="form-label">{{ user_data.username }}</label>
+        <!-- <input type="username" class="form-control" id="exsampleInputusername"> -->
+      </div>
+      <div class="mb-3">
+        <label for="exsampleInputage" class="form-label">とうろくび：</label>
+        <label for="exsampleInputage" class="form-label">{{ user_data.date }}</label>
+        <!-- <input type="age" class="form-control" id="exsampleInputage"> -->
+      </div>
+      <div class="mb-3">
+        <label for="exsampleInputage" class="form-label">ねんれい：</label>
+        <label for="exsampleInputage" class="form-label">{{ age }}さい</label>
+        <!-- <input type="age" class="form-control" id="exsampleInputage"> -->
+      </div>
 
+      <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <div>
+          <button type="submit" class="btn btn-default btn-sm btn-primary">編集</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-5">
+      <img src="https://publicdomainq.net/images/201906/13s/publicdomainq-0035355dnc.jpg" class="img-fluid" alt="Responsive image">
+      <h6 class="ml-4">あなたが身につけた知識や価値観は木の栄養になります</h6>
+    </div>
+    {% if user_data.code == 'aaaaaaaaaa' %}
+    <div>
+      <a href="{% url 'bookdoor:book_create' %}">本作成</a>
+    </div><br>
+    {% endif %}
+    <div class="container mt-3 border-top pt-3">
+      <div class="row">
+        <div class="col-md-3">
+          <div>
+            <h3 class="ribbon3">今までに読んできた本</h3>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% if category_id == 0 %}
+            カテゴリ
+            {% else %}
+            {% for item in category %}
+            {% if item.id == category_id %}
+            {{ item.category }}
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'accounts:profile' 0  1 %}">すべて</a>
+            {% for item in category %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'accounts:profile' item.id 1 %}">{{ item.category }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <div class="col-12">
+          <div class="row gx-4 gx-lg-5">
+            {% for item in books %}
+            <div class="col-md-2 mb-5 position-relative">
+              <!-- <div class="flex">
+                <p></p>
+                <h5 class="fav-category1">小説</h5>
+              </div> -->
+              <div class="card" style="width: 100%;">
+                <img class="img-fluid rounded mb-4 mb-lg-0" src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
+                <div class="card-body position-static">
+                  <h5>{{ item.book.title }}</h5>
+                  {% if item.book.author != '' %}
+                  <h6 class="fav-author">{{ item.book.author}}(著)</h6>
+                  {% endif %}
+                  {% if item.book.illustrator != '' %}
+                  <h6 class="fav-author">{{ item.book.illustrator}}(イラスト)</h6>
+                  {% endif %}
+                  {% if item.book.translator != '' %}
+                  <h6 class="fav-author">>{{ item.book.translator }}(翻訳)</h6>
+                  {% endif %}
+                  <a href="{% url 'bookdoor:book_detail' item.book.code %}" class="stretched-link"></a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              {% if books.has_previous %}
+              <li class="page-item disabled">
+                <a class="page-link" href="{% url 'accounts:profile' category_id %}{{ books.previous_page_number }}" >まえへ</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1">まえへ</a>
+              </li>
+              {% endif %}
+              {% for page_num in page_range %}
+              {% if page_num == books.number %}
+              <li class="page-item"><a class="page-link" tabindex="-1">{{ page_num }}</a></li>
+              {% else %}
+              <li class="page-item"><a class="page-link" href="{% url 'accounts:profile' category_id page_num %}">{{ page_num }}</a></li>
+              {% endif %}
+              {% endfor %}
+              {% if books.has_previous %}
+              <li class="page-item disabled">
+                <a class="page-link" href="{% url 'accounts:profile' category_id %}{{ books.next_page_number }}" >つぎへ</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1">つぎへ</a>
+              </li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
 {% endblock %}

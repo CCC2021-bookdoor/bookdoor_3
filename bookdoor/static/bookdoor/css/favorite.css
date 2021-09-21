@@ -1,0 +1,57 @@
+.container {
+  max-width: 95%;
+}
+
+.flex{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+/* お気に入り画面のリボン */
+.ribbon4 {
+  display: inline-block;
+  position: relative;
+  height: 60px;/*高さ*/
+  line-height: 60px;/*高さ*/
+  text-align: center;
+  padding: 0 40px 0 18px;/*文字の左右の余白*/
+  font-size: 18px;/*文字サイズ*/
+  background: #ffc668;/*背景色*/
+  color: rgb(13, 70, 20);/*文字色*/
+  box-sizing: border-box;
+  border: outset;
+  border-right: none;
+}
+
+.ribbon4:after {
+  position: absolute;
+  content: '';
+  width: 0px;
+  height: 0px;
+  z-index: 1;
+}
+
+.ribbon4:after {
+  top: 0;
+  right: 0;
+  border-width: 30px 15px 30px 0px;
+  border-color: transparent #fff transparent transparent;
+  border-style: solid;
+}
+
+/* fav-category */
+
+.fav-category1{
+  background-color: #9df6f7;
+  border-radius: 3px;
+  padding: 3px;
+  border: outset;
+}
+
+.fav-category2{
+  background-color: #4be010;
+  border-radius: 3px;
+  padding: 3px;
+  border: outset;
+}

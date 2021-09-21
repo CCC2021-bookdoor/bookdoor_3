@@ -4,7 +4,18 @@ from .models import BookComment, Category
 class BookSearchForm(forms.Form):
   search=forms.CharField(label='',required=None)
 
+data=[
+  (1,'0'),
+  (2,'1'),
+  (3,'2'),
+  (4,'3'),
+  (5,'4')
+]
 class BookCommentForm(forms.ModelForm):
+
+  evaluation = forms.ChoiceField(label='属性', widget=forms.RadioSelect(), \
+    choices= data, initial=0)
+
   class Meta:
     model=BookComment
     fields=['evaluation','title','spoiler','comment']

@@ -1,16 +1,95 @@
 {% extends 'bookdoor/layout.html' %}
+{% load static %}
+{% load widget_tweaks %}
 
-{% block title %}Comment_BookDoor{% endblock %}
+{% block head %}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Small Business - Start Bootstrap Template</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+<!-- Core theme CSS (includes Bootstrap)-->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'bookdoor/css/book_comment.css' %}">
+{% endblock %}
 
 {% block content %}
-<div>本のタイトル：{{ book.title }}</div>
-<div>{{ attention }}</di<div>
-  <form  method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="value" >
-  </form>
-</div>
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">読んだ本への登録</h1>
+      <p class="lead fw-normal text-white-50 mb-0">評価やコメントを書けます。発言に気を付けるよう心がけましょう。</p>
+    </div>
+  </div>
+</header>
+<body class="bg-light">
+  <div class="container px-2 px-lg-5 py-1 my-4">
+    <!-- Heading Row-->
+    <div class="row gx-4 gx-lg-5 mt-5 mb-2">
+      <div class="col-lg-3">
+        <h3>{{ book.title }}</h3>
+        <div class="author_item">
+          {% if book.author != '' %}
+          <h5 class="author">{{ book.author}}(著)</h5>
+          {% endif %}
+          {% if book.illustrator != '' %}
+          <h5 class="author">{{ book.illustrator}}(イラスト)</h5>
+          {% endif %}
+          {% if book.translator != '' %}
+          <h5 class="author">{{ book.translator }}(翻訳)</h5>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="row gx-4 gx-lg-5 align-items-center ">
+      <div class="col-lg-3 bg-white py-3 mt-0 align-self-start">
+        <div class="example">
+          <a href="{{ book.url }}">
+            <img class="img-fluid rounded" src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
+          </a>
+          <button class="btn btn-warning btn-circle m-1"><i class="far fa-star"></i></button>
+        </div>
+        <!-- <button class="col btn btn-green-fav btn-rounded">お気に入り</button> -->
+      </div>
 
 
+      <div class="col-lg-8 bg-white py-3 ml-lg-5">
+        <h3>評価</h3>
+
+        <form  method="post">
+          
+          {% csrf_token %}
+          <div class="stars">
+            <span class="star-rating">
+              {{ form.select.label }}
+              {% for radio in form.evaluation %}
+              {{ radio.tag }}
+              <label for="id_evaluation_{{ radio.choice_label }}">★</label>
+              {% endfor %}
+            </span>
+          </div>
+
+          
+          <div class="form-group box7">
+            <label for="exampleFormControlInput1">コメントの題名</label>
+            {{ form.title|add_class:"form-control"|attr:"exampleFormControlInput1" }}
+            <!-- <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="題名"> -->
+          </div>
+
+          <div class="form-group box5">
+            <label for="exampleFormControlTextarea1">コメントの内容</label>
+            {{ form.comment|add_class:"form-control"|attr:"exampleFormControlTextarea1" }}
+            <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
+          </div>
+          
+          <button type="submit"  class="col btn btn-green-moon btn-rounded">読んだ本に登録</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
 {% endblock %}

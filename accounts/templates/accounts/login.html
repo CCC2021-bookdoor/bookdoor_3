@@ -1,21 +1,48 @@
 {% extends 'accounts/layout.html' %}
+{% load static %}
 
-{% block title %}LOGIN{% endblock %}
+{% block head %}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Small Business - Start Bootstrap Template</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Core theme CSS (includes Bootstrap)-->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/css/signin.css' %}">
+{% endblock %}
 
 {% block content %}
-<form action="" method="POST">
-  {% csrf_token %}
-  <div>
-    {{ form.login }}
+<div class="container login-container">
+  <div class="row">
+    <div class="col-6 offset-md-3 login-form-1">
+      <h3>ログインフォーム</h3>
+      <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <!-- <input type="text" class="form-control" placeholder="あなたのユーザ名" value="" /> -->
+            {{ form.login }}
+        </div>
+        <div class="form-group">
+            <!-- <input type="password" class="form-control" placeholder="あなたのパスワード" value="" /> -->
+            {{ form.password }}
+        </div>
+
+        <div>
+        </div>
+        <div>
+          <button type="submit" class="btnSubmit"> ログイン</button>
+        </div>
+      </form>
+      <div class="form-group">
+        <a href="{% url 'accounts:account_signup' %}" class="ForgetPwd">
+          サインアップはこちら
+        </a>
+      </div>
+    </div>
   </div>
-  <div>
-    {{ form.password }}
-  </div>
-  <div>
-    <button type="submit"> ログイン</button>
-  </div>
-</form>
-<div>
-  <a href="{% url 'accounts:account_signup' %}">サインアップはこちら</a>
 </div>
 {% endblock %}
