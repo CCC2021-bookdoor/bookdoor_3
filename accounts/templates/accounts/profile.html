@@ -18,7 +18,7 @@
 {% block content %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary p-3 pl-5">
   <div class="ml-5">
-    <a class="navbar-brand" href="">プロフィール</a>
+    <a class="navbar-brand" >プロフィール</a>
   </div>
 </nav>
 
@@ -65,18 +65,26 @@
             <h3 class="ribbon3">今までに読んできた本</h3>
           </div>
         </div>
-        <!-- <div class="col-md-2 offset-md-7">
-          <div class="border-bottom mb-2">
-            <select class="form-control">
-              <option>新しい順</option>
-              <option>小説</option>
-              <option>ビジネス書</option>
-              <option>参考書</option>
-              <option>？？？</option>
-              <option>？？？</option>
-            </select>
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% if category_id == 0 %}
+            カテゴリ
+            {% else %}
+            {% for item in category %}
+            {% if item.id == category_id %}
+            {{ item.category }}
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'accounts:profile' 0  1 %}">すべて</a>
+            {% for item in category %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'accounts:profile' item.id 1 %}">{{ item.category }}</a>
+            {% endfor %}
           </div>
-        </div> -->
+        </div>
         
         <div class="col-12">
           <div class="row gx-4 gx-lg-5">
@@ -99,7 +107,7 @@
                   {% if item.book.translator != '' %}
                   <h6 class="fav-author">>{{ item.book.translator }}(翻訳)</h6>
                   {% endif %}
-                  <a href="book_detail.html" class="stretched-link"></a>
+                  <a href="{% url 'bookdoor:book_detail' item.book.code %}" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -107,15 +115,31 @@
           </div>
           <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
+              {% if books.has_previous %}
               <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                <a class="page-link" href="{% url 'accounts:profile' category_id %}{{ books.previous_page_number }}" >まえへ</a>
               </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1">まえへ</a>
               </li>
+              {% endif %}
+              {% for page_num in page_range %}
+              {% if page_num == books.number %}
+              <li class="page-item"><a class="page-link" tabindex="-1">{{ page_num }}</a></li>
+              {% else %}
+              <li class="page-item"><a class="page-link" href="{% url 'accounts:profile' category_id page_num %}">{{ page_num }}</a></li>
+              {% endif %}
+              {% endfor %}
+              {% if books.has_previous %}
+              <li class="page-item disabled">
+                <a class="page-link" href="{% url 'accounts:profile' category_id %}{{ books.next_page_number }}" >つぎへ</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1">つぎへ</a>
+              </li>
+              {% endif %}
             </ul>
           </nav>
         </div>

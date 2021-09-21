@@ -57,7 +57,7 @@
               アカウント
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'accounts:profile' %}">プロフィール</a>
+              <a class="dropdown-item" href="{% url 'accounts:profile' 0 1 %}">プロフィール</a>
               <a class="dropdown-item" href="{% url 'bookdoor:favorite_book_list' 0 'None' %}">お気に入りの本</a>
               <div class="dropdown-divider"></div>
               {% if request.user.is_authenticated %}
