@@ -3,3 +3,5 @@
 __pycache__/
 db-volumes/
 db.sqlite3
+staticfiles
+config/local_settings.py
