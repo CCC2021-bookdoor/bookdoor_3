@@ -59,6 +59,18 @@
     </div>
     <div class="col-8 ml-lg-5">
       <div class="row gx-4 gx-lg-5 ml-lg-4">
+        <div>
+          {% if search != 'None' %}
+          けんさく：{{ search }}
+          {% endif %}
+          {% if category_id != 0 %}
+          {% for item in category %}
+          {% if item.id == category_id %}
+          カテゴリー：{{ item.category }}
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+        </div>
         {% if count == 0 %}
         <div>存在しません</div>
         {% else %}

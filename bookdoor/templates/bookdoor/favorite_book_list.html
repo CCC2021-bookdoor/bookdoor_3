@@ -18,59 +18,81 @@
 {% endblock %}
 
 {% block content %}
-<div class="col-md-2 offset-md-10 mt-2">
-  <div class="border-bottom mb-2">
-    <select class="form-control">
-      <option>新しい順</option>
-      <option>小説</option>
-      <option>ビジネス書</option>
-      <option>参考書</option>
-      <option>？？？</option>
-      <option>？？？</option>
-
-    </select>
-  </div>
-</div>
-<nav class="navbar navbar-expand-lg p-3  ml-4">
-  <div>
-    <h3 class="ribbon4">お気に入りの本</h3>
-  </div>
-</nav>
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <div class="row gx-4 gx-lg-5">
-        {% if count == 0 %}
-        <div>存在しません</div>
-        {% else %}
-        {% for item in data %}
-        <div class="col-md-2 mb-5 position-relative">
-          <div class="card" style="width: 100%;">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
-            <div class="card-body position-static">
-              <h5>{{ item.title }}</h5>
-              <!-- <h6 class="fav-author">一穂ミチ</h6> -->
-              <a href="book_detail.html" class="stretched-link"></a>
-            </div>
+      <div class="btn-group">
+        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {% if category_id == 0 %}
+          カテゴリ
+          {% else %}
+          {% for item in category %}
+          {% if item.id == category_id %}
+          {{ item.category }}
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'bookdoor:favorite_book_list' 0  1 %}">すべて</a>
+          {% for item in category %}
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'bookdoor:favorite_book_list' item.id 1 %}">{{ item.category }}</a>
+          {% endfor %}
+      </div>
+    </div>
+    <nav class="navbar navbar-expand-lg p-3  ml-4">
+      <div>
+        <h3 class="ribbon4">お気に入りの本</h3>
+      </div>
+    </nav>
+    <div class="row gx-4 gx-lg-5">
+      {% if count == 0 %}
+      <div>存在しません</div>
+      {% else %}
+      {% for item in data %}
+      <div class="col-md-2 mb-5 position-relative">
+        <div class="card" style="width: 100%;">
+          <img class="img-fluid rounded mb-4 mb-lg-0" src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
+          <div class="card-body position-static">
+            <h5>{{ item.title }}</h5>
+            <!-- <h6 class="fav-author">一穂ミチ</h6> -->
+            <a href="{% url 'bookdoor:book_detail' item.code %}" class="stretched-link"></a>
           </div>
         </div>
-        {% endfor %}
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>  
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        {% if books.has_previous %}
+        <li class="page-item disabled">
+          <a class="page-link" href="{% url 'bookdoor:favorite_book_list' category_id %}{{ data.previous_page_number }}" >まえへ</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1">まえへ</a>
+        </li>
         {% endif %}
-      </div>  
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+        {% for page_num in page_range %}
+        {% if page_num == books.number %}
+        <li class="page-item"><a class="page-link" tabindex="-1">{{ page_num }}</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="{% url 'bookdoor:favorite_book_list' category_id page_num %}">{{ page_num }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if books.has_previous %}
+        <li class="page-item disabled">
+          <a class="page-link" href="{% url 'bookdoor:favorite_book_list' category_id %}{{ books.next_page_number }}" >つぎへ</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1">つぎへ</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
   </div>
 </div>
 {% endblock %}

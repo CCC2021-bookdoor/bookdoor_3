@@ -3,7 +3,7 @@ from . import views
 from .views import BookDoorView, BookSearchView, BookCreateView
 from .views import BookDetailView, BookCommentView, BookConditionView
 from .views import FavoriteBookListView,BookRankingView
-from .views import CommentSearchView
+from .views import CommentSearchView, BookRankingCategoryView
 
 app_name='bookdoor'
 urlpatterns=[
@@ -19,10 +19,12 @@ urlpatterns=[
      name='book_comment_report'),
   path(r'favorite_book/<str:code>',views.favorite_book,\
      name='favorite_book'),
-  path(r'favorite_book_list/<int:category_id>/<str:search>',\
+  path(r'favorite_book_list/<int:category_id>/<int:page>',\
     FavoriteBookListView.as_view(),name='favorite_book_list'),
   path(r'book_ranking',BookRankingView.as_view(),name='book_ranking'),
   path(r'comment_search/<int:category_id>/<str:search>/<int:evaluation>',\
     CommentSearchView.as_view(),name='comment_search'),
   path(r'book_create',BookCreateView.as_view(), name='book_create'),
+  path(r'book_ranking_category/<int:category_id>',BookRankingCategoryView.as_view(),\
+     name='book_ranking_category'),
 ]

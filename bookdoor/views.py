@@ -8,6 +8,7 @@ from .forms import BookSearchForm, BookCreateForm,BookCommentForm
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 import datetime
 import random
 import string
@@ -821,24 +822,16 @@ class FavoriteBookListView(LoginRequiredMixin,TemplateView):
 
     self.params={
       'form':BookSearchForm(),
-      'search':'None',
       'data':'',
       'count':'',
       'category':Category.objects.all(),
       'category_id':'',
+      'page_range':'',
     }
 
-  def get(self,request,category_id,search):
-    if search != 'None' and category_id != 0:
-      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
-        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
-          Q(publisher__icontains=search)).filter(category_id=category_id)
-    elif category_id != 0:
+  def get(self,request,category_id,page=1):
+    if  category_id != 0:
       data=Book.objects.filter(category_id=category_id)
-    elif search != 'None':
-      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
-        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
-          Q(publisher__icontains=search))
     else:
       data=Book.objects.all()
     my_data=[]
@@ -847,36 +840,29 @@ class FavoriteBookListView(LoginRequiredMixin,TemplateView):
       if count > 0:
         my_data.append(item)
     self.params['count']=len(my_data)
-    self.params['data']=my_data
-    if search != 'None':
-      initial_dict=dict(search=search)
-      self.params['form']=BookSearchForm(request.GET or None, initial=initial_dict)
-    self.params['search']=search
+
+    my_data_item=Paginator(my_data,12)
+    page_count=my_data_item.num_pages
+    page_range=[]
+    if page != page_count and page !=1 :
+      page_range=[page-1,page,page+1]
+    elif page == page_count:
+      for i in range(3):
+        if page-2+i >= 1:
+          page_range.append(page-2+i)
+    else:
+      if page_count >2:
+        page_range=[1,2,3]
+      else:
+        for i in range(page_count):
+          page_range.append(i+1)
+
+    self.params['data']=my_data_item.get_page(page)
+    self.params['page_range']=page_range
     self.params['category_id']=category_id
     return render(request,'bookdoor/favorite_book_list.html', self.params)
 
   def post(self,request,category_id,search):
-    if request.POST['search'] == '':
-      return redirect(to='/favorite_book_list/'+str(category_id)+'/None')
-    search=request.POST['search']
-    if category_id != 0:
-      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
-        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
-          Q(publisher__icontains=search))
-    else:
-      data=Book.objects.filter(Q(title__icontains=search)|Q(author__icontains=search)|\
-        Q(illustrator__icontains=search)|Q(translator__icontains=search)|\
-          Q(publisher__icontains=search)).filter(category_id=category_id)
-    my_data=[]
-    for item in data:
-      count = FavoriteBook.objects.filter(writer=request.user,book=item)
-      if len(count) > 0:
-        my_data.append(item)
-    self.params['count']=len(my_data)
-    self.params['data']=my_data
-    self.params['form']=BookSearchForm(request.POST)
-    self.params['search']=search
-    self.params['category_id']=category_id
     return render(request, 'bookdoor/favorite_book_list.html',self.params)
 
 
@@ -1041,3 +1027,33 @@ class BookCreateView(LoginRequiredMixin,TemplateView):
     if user.code=='aaaaaaaaaa':
       book.save()
     return redirect(to='/book_search/0')
+
+
+class BookRankingCategoryView(TemplateView):
+  
+  def __init__(self):
+
+    self.params={
+      'book':'',
+      'category':'',
+    }
+
+  def get(self,request,category_id):
+    books=Book.objects.filter(category_id=category_id)
+    for book in books:
+      count=BookComment.objects.filter(book=book).count()
+      book.count=count
+    if len(books) >1:
+      books=sorted(books, key=lambda r: r.count, reverse=True)
+
+    if len(books) < 30:
+      books=books[0:len(books)-1]
+    else:
+      books=books[0:30]
+
+    self.params['book']=books
+    self.params['category']=Category.objects.get(id=category_id)
+    return render(request,'bookdoor/book_ranking_category.html', self.params)
+
+  def post(self,request):
+    return render(request, 'bookdoor/book_ranking_category.html',self.params)
