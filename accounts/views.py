@@ -70,7 +70,7 @@ class ProfileView(LoginRequiredMixin,View):
     obj=Profile.objects.get(owner=request.user.id)
     profile=ProfileForm(request.POST, instance=obj)
     profile.save()
-    return redirect(to='/accounts/profile/0/0')
+    return redirect(to='/accounts/profile/0/1')
 
 
 class LoginView(views.LoginView):

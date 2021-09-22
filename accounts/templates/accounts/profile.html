@@ -25,20 +25,17 @@
 <div class="container mb-3">
   <div class="row mt-4">
     <div class="col-md-7">
-      <div class="md-3">
-        <label for="exsampleInputusername1" class="form-label">ユーザーネーム：</label>
-        <label for="exsampleInputusername1" class="form-label">{{ user_data.username }}</label>
-        <!-- <input type="username" class="form-control" id="exsampleInputusername"> -->
+      <div class="md-3 flex">
+        <h4>ユーザーネーム:</h4>
+        <h4>{{ user_data.username }}</h4>
       </div>
-      <div class="mb-3">
-        <label for="exsampleInputage" class="form-label">とうろくび：</label>
-        <label for="exsampleInputage" class="form-label">{{ user_data.date }}</label>
-        <!-- <input type="age" class="form-control" id="exsampleInputage"> -->
+      <div class="mb-3 flex">
+        <h4>とうろくび：</h4>
+        <h4>{{ user_data.date }}</h4>
       </div>
-      <div class="mb-3">
-        <label for="exsampleInputage" class="form-label">ねんれい：</label>
-        <label for="exsampleInputage" class="form-label">{{ age }}さい</label>
-        <!-- <input type="age" class="form-control" id="exsampleInputage"> -->
+      <div class="mb-3 flex">
+        <h4>ねんれい：</h4>
+        <h4>{{ age }}さい</h4>
       </div>
 
       <form method="post">
@@ -50,7 +47,7 @@
       </form>
     </div>
     <div class="col-md-5">
-      <img src="https://publicdomainq.net/images/201906/13s/publicdomainq-0035355dnc.jpg" class="img-fluid" alt="Responsive image">
+      <img src="/media/1.jpg" class="img-fluid" alt="Responsive image">
       <h6 class="ml-4">あなたが身につけた知識や価値観は木の栄養になります</h6>
     </div>
     {% if user_data.code == 'aaaaaaaaaa' %}
@@ -65,7 +62,7 @@
             <h3 class="ribbon3">今までに読んできた本</h3>
           </div>
         </div>
-        <div class="btn-group">
+        <div class="btn-group col-md-1 offset-md-7">
           <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if category_id == 0 %}
             カテゴリ
@@ -89,7 +86,7 @@
         <div class="col-12">
           <div class="row gx-4 gx-lg-5">
             {% for item in books %}
-            <div class="col-md-2 mb-5 position-relative">
+            <div class="col-lg-2 col-md-4 col-sm-6 mb-5 position-relative flex">
               <!-- <div class="flex">
                 <p></p>
                 <h5 class="fav-category1">小説</h5>
