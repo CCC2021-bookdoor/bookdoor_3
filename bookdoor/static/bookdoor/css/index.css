@@ -24,4 +24,19 @@ img{
 }
 
 
+.janru{
+  width: 150px;
+  background-color: rgb(121, 120, 120);
+  text-align: center;
+}
 
+.kategori{
+  text-align: center;
+}
+
+@media (max-width: 450px) {
+  /* 横幅が320px以下の場合に適用するスタイル */
+  .kategori{
+    
+  }
+}

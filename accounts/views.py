@@ -103,4 +103,4 @@ class ProfileCreateView(LoginRequiredMixin,View):
     profile.nickname=request.POST['nickname']
     profile.choices=request.POST['choices']
     profile.save()
-    return redirect(to='/accounts/profile')
+    return redirect(to='/accounts/profile/0/1')

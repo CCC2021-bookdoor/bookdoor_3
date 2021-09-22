@@ -135,7 +135,7 @@ MEDIA_URL = '/media/'
 
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/accounts/profile'
+LOGIN_REDIRECT_URL = '/accounts/profile/0/1'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL='accounts.CustomUser'

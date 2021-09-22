@@ -43,13 +43,13 @@
         </a>
         <button class="btn btn-warning btn-circle m-1"><i class="far fa-star"></i></button>
       </div>
-      <a href="{% url 'bookdoor:book_comment' book.code %}"><button class="col btn btn-green-moon btn-rounded">読んだ本に登録</button></a>
+      <a href="{% url 'bookdoor:book_comment' book.code %}"><button class="col btn btn-green-moon btn-rounded">ほんをよんだ</button></a>
       <a href="{% url 'bookdoor:favorite_book' book.code %}">
         <button class="col btn btn-green-fav btn-rounded">
           {% if count == 0 %}
-          お気に入りに登録
+          おきにいり
           {% else %}
-          お気に入り解除
+          おきにいりをはずす
           {% endif %}
         </button>
       </a>
@@ -97,7 +97,7 @@
         </div>
         <div>
           <p class="result-rating-rate">
-            <span class="star5_rating" data-rate="3.8"></span>
+            <span class="star5_rating" data-rate="{{ item.evaluation }}"></span>
             <span class="number_rating">{{ item.evaluation }}</span>
           </p>
           <div class="form-group box8">
@@ -107,9 +107,11 @@
             <h6>{{ item.comment }}</h6>
           </div>
           <div class="good">
-            <button type="button" class="btn btn-outline-success">いいね！</button>
+            <div class="tuuhou"></div>
+            <!-- <button type="button" class="btn btn-outline-dark ">通報</button> -->
+            <button type="button" class="btn btn-outline-danger">いいね！</button>
             <h4>10いいね</h4>
-            <div class="tuuhou"></div><button type="button" class="btn btn-outline-dark ">通報</button>
+            
           </div>
         </div>
       </div>

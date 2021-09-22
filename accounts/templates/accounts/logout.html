@@ -3,9 +3,17 @@
 {% block title %}LOGOUT{% endblock %}
 
 {% block content %}
-<div>ログアウトしますか？</div>
-<form method="post">
-  {% csrf_token %}
-  <button type="submit">ログアウト</button>
-</form>
+<div class="container login-container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 login-form-1">
+      <h5>ログアウトしますか？</h5>
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit">ログアウト</button>
+      </form>
+    </div>
+  </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
 {% endblock %}
