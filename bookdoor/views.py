@@ -735,6 +735,7 @@ class BookCommentView(LoginRequiredMixin,TemplateView):
       date_count=BookComment.objects.filter(date=date,writer=writer,\
         comment__isnull = False).count()
       evaluation=request.POST['evaluation']
+      title=request.POST['title']
       comment=request.POST['comment']
       if date_count >= 3 and comment is not None:
         return render(request,'bookdoor/comment_attention.html', self.params)
@@ -749,7 +750,7 @@ class BookCommentView(LoginRequiredMixin,TemplateView):
       birthday=writer.birthday
       age=(int(today.strftime("%Y%m%d")) - int(birthday.strftime("%Y%m%d"))) // 10000
       value=BookComment(book=book,writer=writer,evaluation=evaluation,comment=comment,\
-        code=code,date=date,age=age)
+        code=code,date=date,age=age,title=title)
       value.save()
     return redirect(to='/book_detail/'+str(book_code))
 
@@ -927,8 +928,8 @@ class CommentSearchView(TemplateView):
   def get(self,request,category_id,search,evaluation):
     if search != 'None':
       data=BookComment.objects.filter(Q(title__icontains=search)|\
-        Q(comment__icontains=search)).filter(title__isnull = None,\
-          comment__isnull = None )
+        Q(comment__icontains=search)).filter(title__isnull = False,\
+          comment__isnull = False )
     else:
       data=BookComment.objects.filter(title__isnull = False, comment__isnull = False)
     

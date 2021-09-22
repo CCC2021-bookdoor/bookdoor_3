@@ -1,0 +1,10 @@
+.aiueo{
+  color: blue;
+}
+@media screen and (max-width:800px) {
+  /* 横幅が320px以下の場合に適用するスタイル */
+  .aiueo{
+      color: black;
+  }
+}
+

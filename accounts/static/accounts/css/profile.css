@@ -35,3 +35,12 @@
 .flex{
   display: flex;
 }
+
+.profile{
+  border: 20px inset rgb(12, 22, 153);
+
+}
+
+.border1{
+  border-bottom: 3px inset rgb(94, 75, 75);;
+}

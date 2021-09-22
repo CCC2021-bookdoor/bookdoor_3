@@ -25,7 +25,7 @@
       </div>
   </div>
 </header>
-<div class="container px-lg-5 pt-1 bg-white">
+<div class="container px-lg-5 pt-1 bg-white height mt-4 mt-md-5">
   <div class="row gx-4 gx-lg-5  my-5">
     <!-- age choice -->
     <div class="col-md-3 mb-3 clearfix">
@@ -92,7 +92,7 @@
               <div class="card-body">
                 <a href="{% url 'bookdoor:book_detail' item.book.code %}" class="stretched-link position-static"></a>
                 <br><br><br>
-                <h4 class="card-text comment-color">{{ item.title }}</h4>
+                <h4 class="card-text comment-color">『{{ item.title }}』</h4>
                 <p class="card-text"><small class="text-muted"></small></p>
               </div>
             </div>

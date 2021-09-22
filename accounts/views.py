@@ -69,7 +69,11 @@ class ProfileView(LoginRequiredMixin,View):
   def post(self, request, category_id, *args, **kwargs):
     obj=Profile.objects.get(owner=request.user.id)
     profile=ProfileForm(request.POST, instance=obj)
-    profile.save()
+    try:
+
+      profile.save()
+    except Exception as e:
+      return redirect(to='/accounts/profile/0/1')
     return redirect(to='/accounts/profile/0/1')
 
 
@@ -102,5 +106,9 @@ class ProfileCreateView(LoginRequiredMixin,View):
     profile.owner=request.user
     profile.nickname=request.POST['nickname']
     profile.choices=request.POST['choices']
-    profile.save()
+    try:
+
+      profile.save()
+    except Exception as e:
+      return redirect(to='/accounts/profile_create/')
     return redirect(to='/accounts/profile/0/1')

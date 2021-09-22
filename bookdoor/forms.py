@@ -15,7 +15,7 @@ class BookCommentForm(forms.ModelForm):
 
   evaluation = forms.ChoiceField(label='属性', widget=forms.RadioSelect(), \
     choices= data, initial=0)
-
+  title = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'placeholder':''}))
   class Meta:
     model=BookComment
     fields=['evaluation','title','spoiler','comment']

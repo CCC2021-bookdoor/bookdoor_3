@@ -58,12 +58,13 @@
 
 
       <div class="col-lg-8 bg-white py-3 ml-lg-5">
-        <h3>評価</h3>
+        <div class="mb-5"><h3 class="mb-2">評価</h3></div>
 
         <form  method="post">
           
           {% csrf_token %}
           <div class="stars">
+            <h6>ひょうか（ひつよう）</h6>
             <span class="star-rating">
               {{ form.select.label }}
               {% for radio in form.evaluation %}

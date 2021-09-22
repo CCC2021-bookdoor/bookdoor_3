@@ -25,18 +25,19 @@
   </nav>
   
   <div class="row mt-4">
-    <div class="col-md-7">
-      <div class="md-3 flex">
-        <h4>ユーザーネーム:</h4>
-        <h4>{{ user_data.username }}</h4>
+    <div class="col-md-6 profile ml-md-3">
+      <div class="my-md-5 flex">
+        
+        <h3 class="border1">ユーザーネーム:</h3>
+        <h3 class="border1">{{ user_data.username }}</h3>
       </div>
-      <div class="mb-3 flex">
-        <h4>とうろくび：</h4>
-        <h4>{{ user_data.date }}</h4>
+      <div class="mb-md-5 flex">
+        <h3 class="border1">とうろくび：</h3>
+        <h3 class="border1">{{ user_data.date }}</h3>
       </div>
-      <div class="mb-3 flex">
-        <h4>ねんれい：</h4>
-        <h4>{{ age }}さい</h4>
+      <div class="mb-md-5 flex">
+        <h4 class="border1">ねんれい：</h4>
+        <h4 class="border1">{{ age }}さい</h4>
       </div>
 
       <form method="post">
@@ -63,7 +64,7 @@
             <h3 class="ribbon3">今までに読んできた本</h3>
           </div>
         </div>
-        <div class="btn-group col-md-1 offset-md-7">
+        <div class="btn-group col-md-1 offset-md-7 mb-4">
           <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if category_id == 0 %}
             カテゴリ
