@@ -21,9 +21,10 @@
 {% block content %}
 <div class="container login-container">
   <div class="row">
-    <div class="col-6 offset-md-3 login-form-1">
+    <div class="col-md-6 offset-md-3 login-form-1">
       <h3>サインアップ</h3>
       <form method="POST">
+        {% csrf_token %}
         <div class="form-group">
           <!-- <input type="text" class="form-control" placeholder="あなたのユーザ名" value="" /> -->
           {{ form.username }}
@@ -41,9 +42,11 @@
           {{ form.password2 }}
         </div>
         <div class="form-group">
-          <button type="submit"  class="btnSubmit">サインアップ</button>
+          <button type="submit"  class="btnSubmit">つぎへ</button>
         </div>
+        <strong>※パスワードは8文字以上</strong>
       </form>
+      
     </div>
   </div>
 </div>

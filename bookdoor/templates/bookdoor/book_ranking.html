@@ -20,7 +20,7 @@
   <div class="container px-4 px-lg-5 my-5">
       <div class="text-center text-white">
           <h1 class="display-4 fw-bolder">ランキング</h1>
-          <p class="lead fw-normal text-white-50 mb-0">ここには本の種類ごとに人気な順番で</p>
+          <p class="lead fw-normal text-white-50 mb-0">本の種類ごとのランキングがのっています</p>
       </div>
   </div>
 </header>
@@ -34,8 +34,8 @@
           {% for item in data %}
           <div class="row gx-4 gx-lg-5 mb-5 border-bottom">
             <div class="col-md-2 mb-5 pl-3">
-                <h4 class="pl-5 pt-3">{{ item.category.category }}</h4>
-                <a href="{% url 'bookdoor:book_ranking_category' item.category.id %}" class="btn btn-outline-success btn-lg ml-5 mt-5" role="button" aria-pressed="true">くわしく</a>
+                <h4 class="pl-md-5 pt-md-3">{{ item.category.category }}</h4>
+                <a href="{% url 'bookdoor:book_ranking_category' item.category.id %}" class="btn btn-outline-success btn-lg ml-md-5 mt-md-5" role="button" aria-pressed="true">くわしく</a>
             </div>
             {% if item.count == 0 %}
             まだありません
@@ -59,8 +59,8 @@
                 </div>
                 <div class="card" style="width: 100%;">
                   <img class="img-fluid rounded mb-4 mb-lg-0" src="https://blog-001.west.edge.storage-yahoo.jp/res/blog-ca-2b/y828tyukai/folder/686422/45/64788645/img_0" alt="..." />
-                  <div class="card-body">
-                    <p class="card-text">{{ book.title }}</p>
+                  <div class="card-body rankig-color">
+                    <strong class="card-text ">{{ book.title }}</strong>
                   </div>
                 </div>
               </a>

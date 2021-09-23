@@ -22,3 +22,32 @@ img{
 .btn-pink{
   background-color: pink;
 }
+
+
+.janru{
+  width: 100%;
+  background-color: rgb(121, 120, 120);
+  text-align: center;
+}
+
+.kategori{
+  text-align: center;
+}
+
+/* カルーセルのニックネームの色 */
+.nickname{
+  color: rgb(82, 163, 0);
+}
+/* カルーセルのニックネームの位置 */
+.height{
+  height: 30%;
+}
+
+.margin{
+  margin-bottom: 0%;
+}
+
+/* カルーセルのタイトルの色 */
+.title{
+  color: rgb(100, 36, 36);
+}

@@ -24,6 +24,7 @@ class BookDoorView(TemplateView):
       'attention':'',
       'category':Category.objects.all(),
       'age_range':range(15),
+      'tree':'',
     }
 
   def get(self,request):
@@ -287,6 +288,9 @@ class BookDoorView(TemplateView):
       if k >= 9:
         break
       if item.comment != None and item.title != None:
+        profile=Profile.objects.get(owner=item.writer)
+        nickname=profile.nickname
+        item.nickname=nickname
         comment_loop.append(item)
         k+=1
 
@@ -298,6 +302,32 @@ class BookDoorView(TemplateView):
       item['c']=comment_loop[i*3+2]
       comment_set.append(item)
 
+    if request.user.is_authenticated:
+      tree=BookComment.objects.filter(writer=self.request.user).count()
+      if tree<10:
+        tree=1
+      elif tree<20:
+        tree=2
+      elif tree<35:
+        tree=3
+      elif tree<50:
+        tree=4
+      elif tree<75:
+        tree=5
+      elif tree<100:
+        tree=6
+      else:
+        last=BookComment.objects.filter(writer=self.request.user).last()
+        today=datetime.date.today()
+        ago=(int(today.strftime("%Y%m%d")) - int(last.date.strftime("%Y%m%d")))
+        if ago<30:
+          tree=7
+        else:
+          tree=8
+    else:
+      tree=1
+
+    self.params['tree']=tree
     self.params['comment']=comment_set
     self.params['books']=books
     return render(request,'bookdoor/index.html', self.params)
@@ -317,6 +347,7 @@ class BookConditionView(TemplateView):
       'category_id':'',
       'age':'',
       'age_range':range(15),
+      'tree':'',
     }
 
   def get(self,request,category_id,age):
@@ -581,6 +612,9 @@ class BookConditionView(TemplateView):
       if k >= 9:
         break
       if item.comment != None and item.title != None:
+        profile=Profile.objects.get(owner=item.writer)
+        nickname=profile.nickname
+        item.nickname=nickname
         comment_loop.append(item)
         k+=1
 
@@ -591,7 +625,33 @@ class BookConditionView(TemplateView):
       item['b']=comment_loop[i*3+1]
       item['c']=comment_loop[i*3+2]
       comment_set.append(item)
+    
+    if request.user.is_authenticated:
+      tree=BookComment.objects.filter(writer=self.request.user).count()
+      if tree<10:
+        tree=1
+      elif tree<20:
+        tree=2
+      elif tree<35:
+        tree=3
+      elif tree<50:
+        tree=4
+      elif tree<75:
+        tree=5
+      elif tree<100:
+        tree=6
+      else:
+        last=BookComment.objects.filter(writer=self.request.user).last()
+        today=datetime.date.today()
+        ago=(int(today.strftime("%Y%m%d")) - int(last.date.strftime("%Y%m%d")))
+        if ago<30:
+          tree=7
+        else:
+          tree=8
+    else:
+      tree=1
 
+    self.params['tree']=tree
     self.params['comment']=comment_set
     self.params['books']=books
     self.params['category_id']=category_id
@@ -735,6 +795,7 @@ class BookCommentView(LoginRequiredMixin,TemplateView):
       date_count=BookComment.objects.filter(date=date,writer=writer,\
         comment__isnull = False).count()
       evaluation=request.POST['evaluation']
+      title=request.POST['title']
       comment=request.POST['comment']
       if date_count >= 3 and comment is not None:
         return render(request,'bookdoor/comment_attention.html', self.params)
@@ -749,7 +810,7 @@ class BookCommentView(LoginRequiredMixin,TemplateView):
       birthday=writer.birthday
       age=(int(today.strftime("%Y%m%d")) - int(birthday.strftime("%Y%m%d"))) // 10000
       value=BookComment(book=book,writer=writer,evaluation=evaluation,comment=comment,\
-        code=code,date=date,age=age)
+        code=code,date=date,age=age,title=title)
       value.save()
     return redirect(to='/book_detail/'+str(book_code))
 
@@ -927,8 +988,8 @@ class CommentSearchView(TemplateView):
   def get(self,request,category_id,search,evaluation):
     if search != 'None':
       data=BookComment.objects.filter(Q(title__icontains=search)|\
-        Q(comment__icontains=search)).filter(title__isnull = None,\
-          comment__isnull = None )
+        Q(comment__icontains=search)).filter(title__isnull = False,\
+          comment__isnull = False )
     else:
       data=BookComment.objects.filter(title__isnull = False, comment__isnull = False)
     

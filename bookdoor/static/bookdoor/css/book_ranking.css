@@ -18,3 +18,8 @@
   display: flex;
   justify-content: space-between;
 }
+
+
+.ranking-color{
+  color: #8c4841;
+}

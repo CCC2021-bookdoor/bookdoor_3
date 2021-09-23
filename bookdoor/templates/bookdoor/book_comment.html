@@ -58,12 +58,13 @@
 
 
       <div class="col-lg-8 bg-white py-3 ml-lg-5">
-        <h3>評価</h3>
+        <div class="mb-5"><h3 class="mb-2">評価</h3></div>
 
         <form  method="post">
           
           {% csrf_token %}
           <div class="stars">
+            <h6>ひょうか（ひつよう）</h6>
             <span class="star-rating">
               {{ form.select.label }}
               {% for radio in form.evaluation %}
@@ -75,19 +76,20 @@
 
           
           <div class="form-group box7">
-            <label for="exampleFormControlInput1">コメントの題名</label>
+            <label for="exampleFormControlInput1">コメントのタイトル</label>
             {{ form.title|add_class:"form-control"|attr:"exampleFormControlInput1" }}
             <!-- <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="題名"> -->
           </div>
 
           <div class="form-group box5">
-            <label for="exampleFormControlTextarea1">コメントの内容</label>
+            <label for="exampleFormControlTextarea1">コメント</label>
             {{ form.comment|add_class:"form-control"|attr:"exampleFormControlTextarea1" }}
             <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
           </div>
           
-          <button type="submit"  class="col btn btn-green-moon btn-rounded">読んだ本に登録</button>
+          <button type="submit"  class="col btn btn-green-moon btn-rounded">とうろく</button>
         </form>
+        <strong></strong>
       </div>
     </div>
   </div>

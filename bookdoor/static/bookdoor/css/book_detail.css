@@ -165,3 +165,7 @@
 .star5_rating[data-rate="0.2"]:after{ width: 4%; }
 .star5_rating[data-rate="0.1"]:after{ width: 2%; }
 .star5_rating[data-rate="0"]:after{ width: 0%; }
+
+
+/* いいね */
+.heart_red{color:#e54747;}
