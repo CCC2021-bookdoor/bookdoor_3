@@ -75,21 +75,13 @@
       
       {% for item in comment %}
       <!-- <div>
-        <a href="{% url 'bookdoor:book_comment_good' item.code %}">
-          いいね
-          {% if item.count_good == 0 %}未
-          {% else %}済
-          {% endif %}
-        </a>
-      </div>
-      <div>
       <a href="{% url 'bookdoor:book_comment_report' item.code %}">
         通報
         {% if item.count_report == 0 %}未
         {% else %}済
         {% endif %}
         </a>
-      </div> -->
+      </div>  -->
       <div class="commnet_lists border-bottom mb-2 pb-2">
         <div class="comment">
           <img class="img-fluid rounded mb-4 mb-lg-0 images" src="https://images-fe.ssl-images-amazon.com/images/S/amazon-avatars-global/default._CR0,0,1024,1024_SX48_.png" alt="..." />
@@ -109,8 +101,17 @@
           <div class="good">
             <div class="tuuhou"></div>
             <!-- <button type="button" class="btn btn-outline-dark ">通報</button> -->
-            <button type="button" class="btn btn-outline-danger">いいね！</button>
-            <h4>10いいね</h4>
+            <div>
+              <a href="{% url 'bookdoor:book_comment_good' item.code %}">
+              
+                {% if item.count_good == 0 %}<i class="far fa-heart fa-2x"></i>
+                {% else %}<i class="fas fa-heart fa-2x heart_red"></i>
+                {% endif %}
+                
+              </a>
+            </div>
+            
+            <h4>{{ item.good }}いいね</h4>
             
           </div>
         </div>

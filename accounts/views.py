@@ -20,6 +20,7 @@ class ProfileView(LoginRequiredMixin,View):
       'category':Category.objects.all(),
       'category_id':'',
       'page_range':'',
+      'tree':'',
     }
 
   def get(self, request, category_id, page=1, *args, **kwargs):
@@ -57,7 +58,33 @@ class ProfileView(LoginRequiredMixin,View):
       else:
         for i in range(page_count):
           page_range.append(i+1)
+    
+    if request.user.is_authenticated:
+      tree=BookComment.objects.filter(writer=self.request.user).count()
+      if tree<10:
+        tree=1
+      elif tree<20:
+        tree=2
+      elif tree<35:
+        tree=3
+      elif tree<50:
+        tree=4
+      elif tree<75:
+        tree=5
+      elif tree<100:
+        tree=6
+      else:
+        last=BookComment.objects.filter(writer=self.request.user).last()
+        today=datetime.date.today()
+        ago=(int(today.strftime("%Y%m%d")) - int(last.date.strftime("%Y%m%d")))
+        if ago<30:
+          tree=7
+        else:
+          tree=8
+    else:
+      tree=1
 
+    self.params['tree']=tree
     self.params['page_range']=page_range
     self.params['category_id']=category_id
     self.params['books']=book.get_page(page)

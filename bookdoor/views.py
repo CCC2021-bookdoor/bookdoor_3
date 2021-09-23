@@ -24,6 +24,7 @@ class BookDoorView(TemplateView):
       'attention':'',
       'category':Category.objects.all(),
       'age_range':range(15),
+      'tree':'',
     }
 
   def get(self,request):
@@ -298,6 +299,32 @@ class BookDoorView(TemplateView):
       item['c']=comment_loop[i*3+2]
       comment_set.append(item)
 
+    if request.user.is_authenticated:
+      tree=BookComment.objects.filter(writer=self.request.user).count()
+      if tree<10:
+        tree=1
+      elif tree<20:
+        tree=2
+      elif tree<35:
+        tree=3
+      elif tree<50:
+        tree=4
+      elif tree<75:
+        tree=5
+      elif tree<100:
+        tree=6
+      else:
+        last=BookComment.objects.filter(writer=self.request.user).last()
+        today=datetime.date.today()
+        ago=(int(today.strftime("%Y%m%d")) - int(last.date.strftime("%Y%m%d")))
+        if ago<30:
+          tree=7
+        else:
+          tree=8
+    else:
+      tree=1
+
+    self.params['tree']=tree
     self.params['comment']=comment_set
     self.params['books']=books
     return render(request,'bookdoor/index.html', self.params)
@@ -317,6 +344,7 @@ class BookConditionView(TemplateView):
       'category_id':'',
       'age':'',
       'age_range':range(15),
+      'tree':'',
     }
 
   def get(self,request,category_id,age):
@@ -591,7 +619,33 @@ class BookConditionView(TemplateView):
       item['b']=comment_loop[i*3+1]
       item['c']=comment_loop[i*3+2]
       comment_set.append(item)
+    
+    if request.user.is_authenticated:
+      tree=BookComment.objects.filter(writer=self.request.user).count()
+      if tree<10:
+        tree=1
+      elif tree<20:
+        tree=2
+      elif tree<35:
+        tree=3
+      elif tree<50:
+        tree=4
+      elif tree<75:
+        tree=5
+      elif tree<100:
+        tree=6
+      else:
+        last=BookComment.objects.filter(writer=self.request.user).last()
+        today=datetime.date.today()
+        ago=(int(today.strftime("%Y%m%d")) - int(last.date.strftime("%Y%m%d")))
+        if ago<30:
+          tree=7
+        else:
+          tree=8
+    else:
+      tree=1
 
+    self.params['tree']=tree
     self.params['comment']=comment_set
     self.params['books']=books
     self.params['category_id']=category_id
