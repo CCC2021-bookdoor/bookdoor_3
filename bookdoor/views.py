@@ -288,6 +288,9 @@ class BookDoorView(TemplateView):
       if k >= 9:
         break
       if item.comment != None and item.title != None:
+        profile=Profile.objects.get(owner=item.writer)
+        nickname=profile.nickname
+        item.nickname=nickname
         comment_loop.append(item)
         k+=1
 
@@ -609,6 +612,9 @@ class BookConditionView(TemplateView):
       if k >= 9:
         break
       if item.comment != None and item.title != None:
+        profile=Profile.objects.get(owner=item.writer)
+        nickname=profile.nickname
+        item.nickname=nickname
         comment_loop.append(item)
         k+=1
 

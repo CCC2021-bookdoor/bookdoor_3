@@ -44,3 +44,11 @@
 .border1{
   border-bottom: 3px inset rgb(94, 75, 75);;
 }
+
+@media screen and (max-width:770px) { 
+
+  .txt{
+    font-size:large;
+  }
+  
+}

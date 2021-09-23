@@ -42,8 +42,11 @@
                 </div>
                 <div class="col-2 border-right position-relative">
                   <div class="card-body position-static">
-                    <h5 class="card-title">{{ item.a.book.title }}</h5>
-                    <p class="card-text">『{{ item.a.title }}』</p>
+                    <div class="height">
+                      <h5 class="card-title margin">{{ item.a.book.title }}</h5>
+                    </div>
+                    <strong class="card-text nickname">{{ item.a.nickname }}</strong>
+                    <p class="card-text title">『{{ item.a.title }}』</p>
                     <a href="{% url 'bookdoor:book_detail' item.a.book.code %}" class="stretched-link"></a>
                   </div>
                 </div>
@@ -52,8 +55,11 @@
                 </div>
                 <div class="col-2 border-right">
                   <div class="card-body">
-                    <h5 class="card-title">{{ item.b.book.title }}</h5>
-                    <p class="card-text">『{{ item.b.title }}』</p>
+                    <div class="height">
+                      <h5 class="card-title margin">{{ item.b.book.title }}</h5>
+                    </div>
+                    <strong class="card-text nickname">{{ item.b.nickname }}</strong>
+                    <p class="card-text title">『{{ item.b.title }}』</p>
                     <a href="{% url 'bookdoor:book_detail' item.b.book.code %}" class="stretched-link"></a>
                   </div>
                 </div>
@@ -62,8 +68,11 @@
                 </div>
                 <div class="col-2">
                   <div class="card-body">
-                    <h5 class="card-title">{{ item.c.book.title }}</h5>
-                    <p class="card-text">『{{ item.c.title }}』</p>
+                    <div class="height">
+                      <h5 class="card-title margin">{{ item.c.book.title }}</h5>
+                    </div>
+                    <strong class="card-text nickname">{{ item.c.nickname }}</strong>
+                    <p class="card-text title">『{{ item.c.title }}』</p>
                     <a href="{% url 'bookdoor:book_detail' item.c.book.code %}" class="stretched-link"></a>
                   </div>
                 </div>
@@ -79,8 +88,11 @@
                 </div>
                 <div class="col-2 border-right position-relative">
                   <div class="card-body position-static">
-                    <h5 class="card-title">{{ item.a.book.title }}</h5>
-                    <p class="card-text">『{{ item.a.title }}』</p>
+                    <div class="height">
+                      <h5 class="card-title margin">{{ item.a.book.title }}</h5>
+                    </div>
+                    <strong class="card-text nickname">{{ item.a.nickname }}</strong>
+                    <p class="card-text title">『{{ item.a.title }}』</p>
                     <a href="{% url 'bookdoor:book_detail' item.a.book.code %}" class="stretched-link"></a>
                   </div>
                 </div>
@@ -89,8 +101,11 @@
                 </div>
                 <div class="col-2 border-right">
                   <div class="card-body">
-                    <h5 class="card-title">{{ item.b.book.title }}</h5>
-                    <p class="card-text">『{{ item.b.title }}』</p>
+                    <div class="height">
+                      <h5 class="card-title margin">{{ item.b.book.title }}</h5>
+                    </div>
+                    <strong class="card-text nickname">{{ item.b.nickname }}</strong>
+                    <p class="card-text title">『{{ item.b.title }}』</p>
                     <a href="{% url 'bookdoor:book_detail' item.b.book.code %}" class="stretched-link"></a>
                   </div>
                 </div>
@@ -99,8 +114,11 @@
                 </div>
                 <div class="col-2">
                   <div class="card-body">
-                    <h5 class="card-title">{{ item.c.book.title }}</h5>
-                    <p class="card-text">『{{ item.c.title }}』</p>
+                    <div class="height">
+                      <h5 class="card-title margin">{{ item.c.book.title }}</h5>
+                    </div>
+                    <strong class="card-text nickname">{{ item.c.nickname }}</strong>
+                    <p class="card-text title">『{{ item.c.title }}』</p>
                     <a href="{% url 'bookdoor:book_detail' item.c.book.code %}" class="stretched-link"></a>
                   </div>
                 </div>
