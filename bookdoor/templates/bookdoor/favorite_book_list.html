@@ -14,14 +14,14 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="{% static 'bookdoor/css/favorite_book.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'bookdoor/css/favorite.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container ">
   <div class="row">
     <div class="col-12">
-      <div class="btn-group">
+      <div class="btn-group col-1 offset-md-10 mt-2">
         <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {% if category_id == 0 %}
           カテゴリ
@@ -41,14 +41,14 @@
           {% endfor %}
       </div>
     </div>
-    <nav class="navbar navbar-expand-lg p-3  ml-4">
+    <nav class="navbar navbar-expand-lg p-3  ml-md-4">
       <div>
         <h3 class="ribbon4">お気に入りの本</h3>
       </div>
     </nav>
-    <div class="row gx-4 gx-lg-5">
+    <div class="row gx-4 gx-lg-5 height">
       {% if count == 0 %}
-      <div>存在しません</div>
+      <strong class="ml-5">存在しません</strong>
       {% else %}
       {% for item in data %}
       <div class="col-md-2 mb-5 position-relative">
@@ -94,5 +94,6 @@
       </ul>
     </nav>
   </div>
+</div>
 </div>
 {% endblock %}

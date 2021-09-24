@@ -27,10 +27,10 @@
       </div>
   </div>
 </header>
-<div class="container px-lg-5 pt-1 bg-white">
-  <div class="row gx-4 gx-lg-5  my-5">
+<div class="container px-lg-5 pt-1 bg-white height  mt-4 mt-md-5">
+  <div class="row gx-4 gx-lg-5 my-5">
     <!-- age choice -->
-    <div class="col-3 mb-3 clearfix">
+    <div class="col-md-3 mb-3 clearfix">
       <h4>ほんをけんさくする</h4>
       <div class="input-group my-3">
         <form action="{% url 'bookdoor:book_search' category_id 'None' %}" method="post">
@@ -57,9 +57,9 @@
         </div>
       </div>
     </div>
-    <div class="col-8 ml-lg-5">
+    <div class="col-md-8 ml-lg-5">
       <div class="row gx-4 gx-lg-5 ml-lg-4">
-        <div>
+        <div >
           {% if search != 'None' %}
           けんさく：{{ search }}
           {% endif %}
@@ -75,12 +75,12 @@
         <div>存在しません</div>
         {% else %}
         {% for item in data %}
-        <div class="card mb-3 bg-light" >
+        <div class="card mb-3 bg-light row-width" >
           <div class="row no-gutters position-relative">
-            <div class="col-md-2">
+            <div class="col-5 col-md-2">
               <img class="img-fluid rounded mb-4 mb-lg-0" src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
             </div>
-            <div class="col-md-5">
+            <div class="col-5 col-md-8">
               <div class="card-body">
                 <a href="{% url 'bookdoor:book_detail' item.code %}">
                   <h5 class="card-title">{{ item.title }}</h5>
@@ -97,9 +97,9 @@
                 <p class="card-text"><small class="text-muted">{{ item.count }}人に読まれています。</small></p>
               </div>
             </div>
-            <div class="col-md-5 position-static">
+            <div class="col-2 col-md-2 position-static">
               <div class="card-body">
-                <a href="{% url 'bookdoor:book_detail' item.code %}" class="stretched-link">くわしくみる</a>
+                <a href="{% url 'bookdoor:book_detail' item.code %}" class="stretched-link"></a>
               </div>
             </div>
           </div>

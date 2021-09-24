@@ -34,7 +34,8 @@
           <h4 class="pl-5 pt-3">{{ category.category }}</h4>
         </div>      
         <div class="col-12">
-          {% for item in book %}
+          <div class="row">
+            {% for item in book %}
           <div class="col-md-2 mb-5">
             <a href="{% url 'bookdoor:book_detail' item.code %}">
               <div class="flex">
@@ -60,6 +61,8 @@
             </a>
           </div>
           {% endfor %}
+          </div>
+          
         </div>
       </div>
     </div>

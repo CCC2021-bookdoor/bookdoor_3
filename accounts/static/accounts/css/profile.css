@@ -11,9 +11,44 @@
   text-align: center;
   padding: 0 40px 0 18px;/*文字の左右の余白*/
   font-size: 18px;/*文字サイズ*/
-  background: #613f09;/*背景色*/
-  color: rgb(255, 255, 255);/*文字色*/
+  background: #ffc668;/*背景色*/
+  color: #FFF;/*文字色*/
   box-sizing: border-box;
-  border: outset;
-  border-right: none;
+}
+
+.ribbon3:after {
+  position: absolute;
+  content: '';
+  width: 0px;
+  height: 0px;
+  z-index: 1;
+}
+
+.ribbon3:after {
+  top: 0;
+  right: 0;
+  border-width: 30px 15px 30px 0px;
+  border-color: transparent #fff transparent transparent;
+  border-style: solid;
+}
+
+.flex{
+  display: flex;
+}
+
+.profile{
+  border: 20px inset rgb(12, 22, 153);
+
+}
+
+.border1{
+  border-bottom: 3px inset rgb(94, 75, 75);;
+}
+
+@media screen and (max-width:770px) { 
+
+  .txt{
+    font-size:large;
+  }
+  
 }

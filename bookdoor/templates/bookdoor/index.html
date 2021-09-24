@@ -4,6 +4,7 @@
 {% block head %}
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>Small Business - Start Bootstrap Template</title>
@@ -17,7 +18,7 @@
 
 {% block content %}
 <div class="container px-2 px-lg-5 py-1 my-4 bg-white">
-  <div class="row mt-3">
+  <div class="row mt-3 ml-3 ml-md-0">
     <h2>みんなのコメント</h2>
   </div>
   <!-- Heading Row-->
@@ -35,33 +36,48 @@
           <div class="carousel-item active">
             <div class="card mb-cv3 bg-light" >
               <div class="row no-gutters position-relative">
-                <div class="col-md-2 ">
+                <div class="col-2 ">
                   <img src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
                 </div>
-                <div class="col-md-2 border-right position-relative">
+                <div class="col-2 border-right position-relative">
                   <div class="card-body position-static">
-                    <h5 class="card-title">{{ item.a.book.title }}</h5>
-                    <p class="card-text">{{ item.a.title }}</p>
+                    <div class="height">
+                      <h5 class="card-title margin">{{ item.a.book.title }}</h5>
+                    </div>
+                    <div>
+                      <strong class="card-text nickname">{{ item.a.nickname }}</strong>
+                      <p class="card-text title">『{{ item.a.title }}』</p>
+                    </div>
                     <a href="{% url 'bookdoor:book_detail' item.a.book.code %}" class="stretched-link"></a>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-2">
                   <img src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
                 </div>
-                <div class="col-md-2 border-right">
+                <div class="col-2 border-right">
                   <div class="card-body">
-                    <h5 class="card-title">{{ item.b.book.title }}</h5>
-                    <p class="card-text">{{ item.b.title }}</p>
+                    <div class="height">
+                      <h5 class="card-title">{{ item.b.book.title }}</h5>
+                    </div>
+                    <div>
+                      <strong class="card-text nickname">{{ item.b.nickname }}</strong>
+                      <p class="card-text title">『{{ item.b.title }}』</p>
+                    </div>
                     <a href="{% url 'bookdoor:book_detail' item.b.book.code %}" class="stretched-link"></a>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-2">
                   <img src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
                 </div>
-                <div class="col-md-2">
+                <div class="col-2">
                   <div class="card-body">
-                    <h5 class="card-title">{{ item.c.book.title }}</h5>
-                    <p class="card-text">{{ item.c.title }}</p>
+                    <div class="height">
+                      <h5 class="card-title">{{ item.c.book.title }}</h5>
+                    </div>
+                    <div>
+                      <strong class="card-text nickname">{{ item.c.nickname }}</strong>
+                      <p class="card-text title">『{{ item.c.title }}』</p>
+                    </div>
                     <a href="{% url 'bookdoor:book_detail' item.c.book.code %}" class="stretched-link"></a>
                   </div>
                 </div>
@@ -72,33 +88,42 @@
           <div class="carousel-item">
             <div class="card mb-cv3 bg-light" >
               <div class="row no-gutters position-relative">
-                <div class="col-md-2 ">
+                <div class="col-2 ">
                   <img src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
                 </div>
-                <div class="col-md-2 border-right position-relative">
+                <div class="col-2 border-right position-relative">
                   <div class="card-body position-static">
-                    <h5 class="card-title">{{ item.a.book.title }}</h5>
-                    <p class="card-text">{{ item.a.title }}</p>
+                    <div class="height">
+                      <h5 class="card-title">{{ item.a.book.title }}</h5>
+                    </div>
+                    <strong class="card-text nickname">{{ item.a.nickname }}</strong>
+                    <p class="card-text title">『{{ item.a.title }}』</p>
                     <a href="{% url 'bookdoor:book_detail' item.a.book.code %}" class="stretched-link"></a>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-2">
                   <img src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
                 </div>
-                <div class="col-md-2 border-right">
+                <div class="col-2 border-right">
                   <div class="card-body">
-                    <h5 class="card-title">{{ item.b.book.title }}</h5>
-                    <p class="card-text">{{ item.b.title }}</p>
+                    <div class="height">
+                      <h5 class="card-title">{{ item.b.book.title }}</h5>
+                    </div>
+                    <strong class="card-text nickname">{{ item.b.nickname }}</strong>
+                    <p class="card-text title">『{{ item.b.title }}』</p>
                     <a href="{% url 'bookdoor:book_detail' item.b.book.code %}" class="stretched-link"></a>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-2">
                   <img src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
                 </div>
-                <div class="col-md-2">
+                <div class="col-2">
                   <div class="card-body">
-                    <h5 class="card-title">{{ item.c.book.title }}</h5>
-                    <p class="card-text">{{ item.c.title }}</p>
+                    <div class="height">
+                      <h5 class="card-title">{{ item.c.book.title }}</h5>
+                    </div>
+                    <strong class="card-text nickname">{{ item.c.nickname }}</strong>
+                    <p class="card-text title">『{{ item.c.title }}』</p>
                     <a href="{% url 'bookdoor:book_detail' item.c.book.code %}" class="stretched-link"></a>
                   </div>
                 </div>
@@ -119,64 +144,68 @@
       </div>
     </div>
     
-    <div class="col-lg-3"><img class="img-fluid rounded mb-4 mb-lg-0" src="https://publicdomainq.net/images/201906/13s/publicdomainq-0035355dnc.jpg" alt="..." /></div>
+    <div class="col-lg-3 mt-3">
+      <strong >育てた木</strong>
+      <img class="img-fluid rounded mb-4 mb-lg-0" src="/media/{{ tree }}.jpg" alt="..." />
+    </div>
       
   </div>
 </div>
 
 
 <div class="container px-4 px-lg-5 pt-1  bg-white">
-<div class="row mt-3">
-  <h2>あなたへのおすすめ</h2>
-</div>
-<div class="row gx-4 gx-lg-5 align-items-center my-3">
-  <!-- age choice -->
-  <div class="col-12 mb-3 clearfix">
-    <div class="btn-toolbar ml-4" role="toolbar" aria-label="Toolbar with button groups">
-      <div class="mt-3">
-        <a href="{% url 'bookdoor:index'%}" class="btn btn-danger">じぶん</a>
-        <a href="{% url 'bookdoor:book_condition' 0 1 %}" class="btn btn-pink">0～3さい</a>
-        <a href="{% url 'bookdoor:book_condition' 0 2 %}" class="btn btn-primary">4～6さい</a>
-        <a href="{% url 'bookdoor:book_condition' 0 3 %}" class="btn btn-success">7～9さい</a>
-        <a href="{% url 'bookdoor:book_condition' 0 4 %}" class="btn btn-info">10～12さい</a>
-        <a href="{% url 'bookdoor:book_condition' 0 5 %}" class="btn btn-warning">13～15さい</a>
+  <div class="row mt-3 ml-1">
+    <h2>あなたへのおすすめ</h2>
+  </div>
+  <div class="row gx-4 gx-lg-5 align-items-center my-3">
+    <!-- age choice -->
+    <div class="col-12 mb-3 clearfix">
+      <div class="btn-toolbar ml-md-4" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="mt-3">
+          <a href="{% url 'bookdoor:index'%}" class="btn btn-danger "> &emsp;じぶん &emsp; </a>
+          <a href="{% url 'bookdoor:book_condition' 0 1 %}" class="btn btn-pink"> 0～3さい&emsp;</a>
+          <a href="{% url 'bookdoor:book_condition' 0 2 %}" class="btn btn-primary "> &thinsp;4～6さい&emsp;</a>
+          <a href="{% url 'bookdoor:book_condition' 0 3 %}" class="btn btn-success "> &thinsp;7～9さい&emsp;</a>
+          <a href="{% url 'bookdoor:book_condition' 0 4 %}" class="btn btn-info">10～12さい</a>
+          <a href="{% url 'bookdoor:book_condition' 0 5 %}" class="btn btn-warning">13～15さい</a>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- Content Row-->
-  <div class="container">
-    <div class="row">
-      <div class="col-2">
-        <div class="d-flex" id="wrapper">
-          <!-- Sidebar-->
-          <div class="border-end bg-white" id="sidebar-wrapper">
-            <div class="sidebar-heading border-bottom bg-light">ジャンル</div>
-              <div class="list-group list-group-flush">
-                  <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'bookdoor:index'%}">すべて</a>
-                  {% for item in category %}
-                  <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'bookdoor:book_condition' item.id 0 %}">{{ item.category }}</a>
-                  {% endfor %}
+    <!-- Content Row-->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2 col-12">
+          <div class="d-flex " id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+              <div class="sidebar-heading border-bottom py-3 janru">ジャンル</div>
+                <div class="list-group list-group-flush kategori">
+                    <a class="list-group-item list-group-item-action list-group-item-light " href="{% url 'bookdoor:index'%}">すべて</a>
+                    {% for item in category %}
+                    <a class="list-group-item list-group-item-action list-group-item-light" href="{% url 'bookdoor:book_condition' item.id 0 %}">{{ item.category }}</a>
+                    {% endfor %}
+                </div>
               </div>
             </div>
-          </div>
-      </div>
-      <div class="col-10">
-        <div class="row gx-4 gx-lg-5">
-          {% if attention == 1 %}
-          <duv>あなたはすべての本を読みました</duv>
-          {% else %}
-          {% for item in books %}
-          <div class="col-md-2 mb-5 position-relative">
-            <div class="card" style="width: 100%;">
-              <img class="img-fluid rounded mb-4 mb-lg-0" src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
-              <div class="card-body position-static">
-                <p class="card-text">{{ item.title }}</p>
-                <a href="{% url 'bookdoor:book_detail' item.code %}" class="stretched-link"></a>
+        </div>
+        <div class="col-md-10">
+          <div class="row gx-4 gx-lg-5">
+            {% if attention == 1 %}
+            <div>あなたはすべての本を読みました</div>
+            {% else %}
+            {% for item in books %}
+            <div class="col-6 col-lg-2 col-md-4 col-sm-6 position-relative flex mb-3">
+              <div class="card" style="width: 100%;">
+                <img class="img-fluid rounded mb-4 mb-lg-0" src="https://m.media-amazon.com/images/I/417V0YU0LEL._SL500_.jpg" alt="..." />
+                <div class="card-body position-static">
+                  <strong class="card-text">{{ item.title }}</strong>
+                  <a href="{% url 'bookdoor:book_detail' item.code %}" class="stretched-link"></a>
+                </div>
               </div>
             </div>
+            {% endfor %}
+            {% endif %}
           </div>
-          {% endfor %}
-          {% endif %}
         </div>
       </div>
     </div>
