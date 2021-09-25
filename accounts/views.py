@@ -2,7 +2,8 @@ from random import choices
 from django.views import View
 from django.shortcuts import render, redirect
 from accounts.models import CustomUser, Profile
-from bookdoor.models import BookComment, Category
+from bookdoor.models import BookComment
+from bookdoor.models import Category
 from accounts.forms import ProfileForm, SignupUserForm,ProfileCreateForm
 from allauth.account import views
 from django.contrib.auth.mixins import LoginRequiredMixin

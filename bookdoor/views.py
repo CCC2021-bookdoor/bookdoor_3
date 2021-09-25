@@ -3,7 +3,8 @@ from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from accounts.models import CustomUser ,Profile
 from .models import Book, BookComment, BookCommentGood
-from .models import BookCommentReport, FavoriteBook, Category
+from .models import BookCommentReport, FavoriteBook
+from .models import Category
 from .forms import BookSearchForm, BookCreateForm,BookCommentForm
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
